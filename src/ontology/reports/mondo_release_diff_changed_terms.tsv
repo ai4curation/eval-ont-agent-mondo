@@ -3,6 +3,7 @@ MONDO:0008340	label	ptosis, hereditary congenital, 1	congenital ptosis
 MONDO:0043693	label	alcoholic liver diseases	alcoholic liver disease
 MONDO:0002083	label	Richter syndrome	Richter transformation
 MONDO:0004914	label	celiac artery stenosis from compression by median arcuate ligament of diaphragm	obsolete celiac artery stenosis from compression by median arcuate ligament of diaphragm
+MONDO:0011996	label	chronic myelogenous leukemia, BCR-ABL1 positive	chronic myeloid leukemia
 MONDO:0006835	label	lipoid nephrosis	minimal change disease
 MONDO:0009327	label	heart, malformation of	obsolete heart, malformation of
 MONDO:0008549	label	thoracic dysostosis, isolated	obsolete thoracic dysostosis, isolated
@@ -20,12 +21,14 @@ MONDO:0014820	label	mitochondrial DNA depletion syndrome 14 (cardioencephalomyop
 MONDO:0020300	label	autosomal dominant nocturnal frontal lobe epilepsy	obsolete autosomal dominant nocturnal frontal lobe epilepsy
 MONDO:0023124	label	familial pulmonary arterial hypertension leucopenia and atrial septal defect	Dursun syndrome
 MONDO:0023243	label	glass-chapman-hockley syndrome	obsolete glass-chapman-hockley syndrome
+MONDO:0030983	label	Waardenburg syndrome, IIa 2F	Waardenburg syndrome 2F
 MONDO:0034186	label	autosomal recessive extra-oral halitosis	obsolete autosomal recessive extra-oral halitosis
 MONDO:0034820	label	cleft lip and palate-craniofacial dysmorphism-congenital heart defect-hearing loss syndrome	obsolete cleft lip and palate-craniofacial dysmorphism-congenital heart defect-hearing loss syndrome
 MONDO:0035529	label	infantile-onset pulmonary alveolar proteinosis-hypogammaglobulinemia	obsolete infantile-onset pulmonary alveolar proteinosis-hypogammaglobulinemia
 MONDO:0035660	label	GNAO1-related developmental delay-seizures-movement disorder spectrum	obsolete GNAO1-related developmental delay-seizures-movement disorder spectrum
 MONDO:0035661	label	TRAF7-associated heart defect-digital anomalies-facial dysmorphism-motor and speech delay syndrome	obsolete TRAF7-associated heart defect-digital anomalies-facial dysmorphism-motor and speech delay syndrome
 MONDO:0035774	label	NRXN1-related severe neurodevelopmental disorder-motor stereotypies-chronic constipation-sleep-wake cycle disturbance	obsolete NRXN1-related severe neurodevelopmental disorder-motor stereotypies-chronic constipation-sleep-wake cycle disturbance
+MONDO:0700039	label	bladder exstrophy-epispadias-cloacal extrophy complex	bladder exstrophy-epispadias-cloacal exstrophy complex
 MONDO:0700044	label	TUBB2A-related tubulinopathy	obsolete TUBB2A-related tubulinopathy
 MONDO:0700161	label	canine gastrointestinal stromal tumor	canine gastrointestinal stromal tumor, KIT-related, dog
 MONDO:0859008	label	neurofibromatosis/schwannomatosis	mosaic neurofibromatosis/schwannomatosis
@@ -279,8 +282,10 @@ MONDO:0034820	definition	A rare genetic multiple congenital anomalies/dysmorphic
 MONDO:0035529	definition	A rare genetic respiratory disease characterized by infantile onset of pulmonary alveolar proteinosis with hypogammaglobulinemia. Patients have normal respiratory function at birth, but subsequently develop recurrent, mainly viral, infections and progressive respiratory failure, often leading to death in infancy or early childhood. Additional reported features include leukocytosis and splenomegaly.	
 MONDO:0035661	definition	A rare multiple congenital anomalies/dysmorphic syndrome characterized by global developmental delay or regression, variable congenital heart defects (such as patent ductus arteriosus, atrial or ventricular septal defects, and double outlet right ventricle, among others), and dysmorphic features (including ptosis, epicanthal folds, abnormally set/dysplastic ears, low hairline or excess nuchal skin, wide-spaced/inverted nipples, umbilical hernia or diastasis recti, and digital anomalies). Additional variable manifestations are hyper- or hypotonia, seizures, hearing loss, cortical blindness, and optic atrophy. Brain imaging may show cerebral and cerebellar atrophy and hydrocephalus.	
 MONDO:0035774	definition	A rare, genetic, neurodevelopmental disorder characterized by global developmental delay, severe intellectual disability and absence of expressive language. Muscular hypotonia, seizures, autistic behavior and stereotypic movements are common.	
+MONDO:0044205	definition	Shwachman-Diamond syndrome-2 (SDS2) is characterized by exocrine pancreatic dysfunction, hematopoietic abnormalities, short stature, and metaphyseal dysplasia ({1:Stepensky et al., 2017}).nnFor a discussion of genetic heterogeneity of Shwachman-Diamond syndrome, see SDS1 (OMIM:260400).	Any Shwachman-Diamond syndrome in which the cause of the disease is a variation on the EFL1 gene, characterized by exocrine pancreatic dysfunction, hematopoietic abnormalities, short stature, and metaphyseal dysplasia.
 MONDO:0700044	definition	A tubulinopathy syndrome often associated with microtubule dysfunction, malformations of the corpus callosum, enlarged ventricles, dysgyria, abnormal basal ganglia, cerebellar vermis hypoplasia/dysplasia, and decreased white matter, due to heterozygous variants in TUBB2A. Individuals may present with variable combinations of malformations of the corpus callosum, enlarged ventricles, dysgyria, abnormal basal ganglia, cerebellar vermis hypoplasia/dysplasia, and decreased white matter. Epilepsy, speech impairment, and motor impairment are also frequent features.	
 MONDO:0859152	definition		A neurodevelopmental disorder caused by variation in the GEMIN5 gene, characterized by global developmental delay with prominent motor abnormalities, mainly axial hypotonia, gait ataxia, and appendicular spasticity.
+MONDO:0957382	definition		Any multiple mitochondrial dysfunctions syndrome in which the cause of the disease is a mutation in the GCSH gene. It is characterized by a clinical spectrum ranging from neonatal fatal glycine encephalopathy to an attenuated phenotype of developmental delay, behavioral problems, limited epilepsy, and variable movement problems.
 MONDO:0020683	obsoletion_candidate		True
 MONDO:0024666	obsoletion_candidate		True
 MONDO:0002961	obsoletion_candidate		True
@@ -305,6 +310,8 @@ MONDO:0020300	obsoletion_candidate	True
 MONDO:0021834	obsoletion_candidate		True
 MONDO:0023124	obsoletion_candidate	True	
 MONDO:0023243	obsoletion_candidate	True	
+MONDO:0024953	obsoletion_candidate		True
+MONDO:0034021	obsoletion_candidate		True
 MONDO:0034186	obsoletion_candidate	True	
 MONDO:0034820	obsoletion_candidate	True	
 MONDO:0035529	obsoletion_candidate	True	
@@ -315,6 +322,7 @@ MONDO:0044796	obsoletion_candidate		True
 MONDO:0700044	obsoletion_candidate	True	
 MONDO:0859205	obsoletion_candidate		True
 MONDO:0971094	obsoletion_candidate		True
+MONDO:1011300	obsoletion_candidate		True
 MONDO:0004914	obsolete		True
 MONDO:0009327	obsolete		True
 MONDO:0008549	obsolete		True
