@@ -1,0 +1,772 @@
+# Evaluate an AI agent on a GitHub issue
+# See README.md for full documentation
+#
+# Required secrets (depending on agent_runtime):
+#   claude: ANTHROPIC_API_KEY or CLAUDE_CODE_OAUTH_TOKEN
+#   codex:  CODEX_AUTH_JSON (from ~/.codex/auth.json after `codex login`)
+# Optional secrets: GH_PAT (for private cross-repo access)
+#
+# ============================================================================
+# ADMINISTRATOR SETUP: Protect eval-base-* Branches
+# ============================================================================
+# This workflow creates eval-base-issue-NNN branches that serve as baselines
+# for multiple agent experiments. These branches should NOT be merged or modified
+# by regular users. Protect them with a one-time GitHub setup:
+#
+# STEPS:
+# 1. Go to Settings → Branches (in your GitHub repository)
+# 2. Click "Add rule" button
+# 3. Branch name pattern: eval-base-*
+# 4. Enable these protections:
+#    ☑ Require a pull request before merging
+#      → Require 1 approval
+#      → Dismiss stale pull request approvals when new commits are pushed
+#    ☑ Require status checks to pass before merging (optional)
+#    ☑ Allow force pushes: DISABLE
+#    ☑ Allow deletions: DISABLE
+# 5. Click "Create" button
+#
+# Result: All eval-base-issue-* branches will be protected from accidental
+# merges or deletions. Users can view them but cannot modify them without
+# authorization. This is a one-time setup covering all current and future
+# eval-base branches.
+#
+# Why wildcard pattern? The workflow creates a new eval-base branch per issue
+# (eval-base-issue-10, eval-base-issue-123, etc.). Protecting the pattern
+# covers all of them automatically without per-branch setup.
+#
+# ============================================================================
+# WORKFLOW STRATEGY: Clean Agent Evaluation
+# ============================================================================
+# This workflow evaluates how well an AI agent can solve a GitHub issue
+# by comparing its work to the human-created PR that solved the issue.
+#
+# KEY DESIGN: Branches must have matching baselines
+# ─────────────────────────────────────────────
+# We create TWO branches from the same state to enable fair comparison:
+#
+#   eval_base_branch  = PR base commit + agent config setup (BASELINE)
+#   expt_branch       = PR base commit + agent config setup + agent work (EXPERIMENT)
+#
+# CRITICAL SEQUENCING:
+# 1. Checkout at PR base commit
+# 2. Install agent configuration (modifies working directory)
+# 3. Create eval_base_branch (captures baseline WITH setup)
+# 4. Create expt_branch (starts from same baseline as eval_base)
+# 5. Claude Code runs and makes changes to expt_branch
+# 6. PR diff shows: expt_branch - eval_base_branch = AGENT CHANGES ONLY
+#
+#   eval_base is created AFTER setup → has install files
+#   expt is created from same state → also has install files
+#   Result: diff shows ONLY agent changes = CLEAN & reviewable
+name: Evaluate an agent on an issue
+run-name: "eval-agent[${{ inputs.agent_runtime || 'claude' }}]: issue #${{ inputs.issue_number }} vs PR #${{ inputs.pr_number }}; model: ${{ inputs.model }}; agent config: ${{ inputs.agent_config_repo || github.repository }}@${{ inputs.agent_config_tag }}:${{ inputs.agent_config_directory }}"
+
+on:
+  workflow_dispatch:
+    inputs:
+      issue_repo:
+        description: "The repository to use as the issue context (owner/repo). Defaults to current repository. You should fill this in if your current repo is an eval repo imported from issue_repo."
+        required: false
+      issue_number:
+        description: "The issue number to run the agent on. This should be an issue in the issue_repo."
+        required: true
+      pr_number:
+        description: "The PR number to evaluate the agent against. Agent will run against the PR's commit state.
+          This should be a PR in the issue repo."
+        required: true
+      # agent template, e.g. obophenotype/uberon-agent + v1.0.0 + subagent-template
+      agent_config_repo:
+        description: "The repository containing the agent configuration (owner/repo). Defaults to current repository.
+          Example: obophenotype/uberon-agent. Storing config in a separate repo is recommended."  
+        required: false
+      agent_config_tag:
+        description: "The version number of the repo to use as a template for the agent. Avoid latest for reproducibility."
+        required: true
+      agent_config_directory:
+        description: "The directory to use as a template for the agent. Defaults to ."
+        required: false
+        default: "."
+      agent_runtime:
+        description: "Agent runtime to use (claude or codex)"
+        required: false
+        default: "claude"
+        type: choice
+        options:
+          - claude
+          - codex
+      model:
+        description: "Model to use (e.g. claude-sonnet-4-5-20250929, gpt-5.4)"
+        required: true
+      force_new_branch:
+        description: "Whether to force a new branch. Defaults to false."
+        required: false
+        default: "false"
+      create_pr:
+        description: "Whether to create a PR. Defaults to false."
+        required: false
+        default: "false"
+      iter_num:
+        description: "Iteration number for multiple runs of the same config. Defaults to 1."
+        required: false
+        default: "1"
+      repo_url_prefix:
+        description: "URL prefix for issue and PR links. Defaults to https://href.li/? for indirect links (avoids clutter on original repo). Set to empty string for direct GitHub links."
+        required: false
+        default: "https://href.li/?"
+        # Use href.li to create indirect links that redirect but don't trigger reciprocal views
+        # This keeps the original issue/PR clean without "evaluation PR" noise
+        # Examples:
+        # - https://href.li/? (default) → indirect link via href.li redirect service
+        # - (empty string) → direct GitHub link (creates reciprocal views, clutters original)
+      container:
+        description: "Optional container image to run in. Leave empty for host runner."
+        required: false
+        default: ""
+        # Common container options (uncomment and customize as needed):
+        # - obolibrary/odkfull:latest     # ODK with ROBOT, owltools, make
+        # - obolibrary/odkfull:v1.5       # Specific ODK version
+        # - ghcr.io/linkml/linkml:latest  # LinkML tooling
+        # Note: Container must have `gh` CLI available, or install it in a step
+      uv_tool_install:
+        description: "Optional list of pypi tools to install using uv."
+        required: false
+        default: ""
+        # Examples:
+        # - uv tool install rust-just
+        # - uv tool install copier
+        # - uv tool install -g @anthropic-ai/claude-code
+        # - uv tool install -g @anthropic-ai/claude-code-action
+      validation_command:
+        description: "Optional command to validate agent changes (e.g., 'make test'). Job fails if validation fails."
+        required: false
+        default: ""
+        # Examples:
+        # - make test                     # Run makefile tests
+        # - make validate                 # ODK validation target
+        # - pytest tests/                 # Python tests
+        # - npm test                      # Node.js tests
+      artifact_retention_days:
+        description: "Number of days to retain workflow artifacts"
+        required: false
+        default: "90"
+      timeout_minutes:
+        description: "Job timeout in minutes"
+        required: false
+        default: "30"
+
+env:
+  SCRIBE_VERSION: v1
+
+jobs:
+  eval-agent-on-issue:
+    runs-on: ubuntu-latest
+    timeout-minutes: ${{ fromJson(inputs.timeout_minutes) }}
+    container: ${{ inputs.container || null }}
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+
+      - name: Set experiment config name
+        run: |
+          # Sanitize inputs for branch name (replace / with -)
+          REPO_PART=$(echo "${{ inputs.agent_config_repo || github.repository }}" | tr '/' '-')
+          DIR_PART=$(echo "${{ inputs.agent_config_directory }}" | tr '/' '-')
+          MODEL_PART=$(echo "${{ inputs.model }}" | tr '/' '-')
+          EXPT_CONFIG_NAME="scribe-${{ env.SCRIBE_VERSION }}-${REPO_PART}-${{ inputs.agent_config_tag }}-${DIR_PART}-${MODEL_PART}-iter${{ inputs.iter_num }}"
+          echo "expt_config_name=${EXPT_CONFIG_NAME}" >> $GITHUB_ENV
+          echo "expt_branch_name=${EXPT_CONFIG_NAME}-issue-${{ inputs.issue_number }}" >> $GITHUB_ENV
+          # Base branch for PRs - shared across all experiments for the same issue
+          echo "eval_base_branch=eval-base-issue-${{ inputs.issue_number }}" >> $GITHUB_ENV
+
+          # Short labels for PR titles (human-readable)
+          # Model: claude-sonnet-4-5-20250929 -> sonnet-4.5
+          MODEL_SHORT=$(echo "${{ inputs.model }}" | sed -E 's/claude-([a-z]+)-([0-9]+)-([0-9]+).*/\1-\2.\3/')
+          echo "model_short=${MODEL_SHORT}" >> $GITHUB_ENV
+          # Config: use directory basename (most distinguishing part)
+          CONFIG_SHORT=$(basename "${{ inputs.agent_config_directory }}")
+          echo "config_short=${CONFIG_SHORT}" >> $GITHUB_ENV
+
+
+      # Get the base commit SHA of the PR (the state before PR changes)
+      - name: Get PR base commit
+        id: pr_base
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
+        run: |
+          # Log which token is being used (helps debug auth issues)
+          if [ -n "${{ secrets.GH_PAT }}" ]; then
+            echo "Using GH_PAT for authentication"
+          else
+            echo "Using GITHUB_TOKEN for authentication (note: cannot access private repos outside this org)"
+          fi
+
+          # Using gh api with --jq for compatibility with older gh versions
+          # (e.g., ODK containers) and to handle PRs with control characters in body.
+          # TODO: Could migrate to `gh pr view --json baseRefOid,createdAt` when containers update gh
+          ISSUE_REPO="${{ inputs.issue_repo || github.repository }}"
+          BASE_SHA=$(gh api "repos/${ISSUE_REPO}/pulls/${{ inputs.pr_number }}" --jq '.base.sha')
+          PR_CREATED_AT=$(gh api "repos/${ISSUE_REPO}/pulls/${{ inputs.pr_number }}" --jq '.created_at')
+          echo "base_sha=${BASE_SHA}" >> $GITHUB_OUTPUT
+          echo "pr_created_at=${PR_CREATED_AT}" >> $GITHUB_OUTPUT
+          echo "PR base commit: ${BASE_SHA}"
+          echo "PR created at: ${PR_CREATED_AT}"
+
+      # Checkout THIS repository at the same commit as when the PR was created
+      # Using fetch-depth: 1 to avoid downloading full history; git will fetch just this commit
+      - name: Checkout workflow repository at PR base
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          ref: ${{ steps.pr_base.outputs.base_sha }}
+
+      # Ensure the base commit is available for branch operations
+      - name: Fetch specific base commit
+        run: |
+          git fetch origin ${{ steps.pr_base.outputs.base_sha }} --depth=1 2>/dev/null || true
+
+      # Also checkout the PR head for reference (what the original PR produced)
+      - name: Checkout PR head for reference
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ inputs.issue_repo || github.repository }}
+          token: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
+          path: __pr_result__
+          ref: refs/pull/${{ inputs.pr_number }}/head
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+
+
+      - name: Install just
+        run: |
+          uv tool install rust-just
+
+      - name: Install copier
+        run: |
+          uv tool install copier
+
+      # Note: uv tool install takes a single argument, so we need to split the list of tools on spaces;
+      # Only run if uv_tool_install is not empty
+      - name: Install additional tools
+        if: ${{ inputs.uv_tool_install != '' }}
+        run: |
+          uv tool install $(echo "${{ inputs.uv_tool_install }}" | tr ' ' '\n')
+
+      - name: Checkout agent template repository in __template__ directory
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ inputs.agent_config_repo || github.repository }}
+          ref: ${{ inputs.agent_config_tag }}
+          path: ./__agent_config__
+          token: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
+
+      # Apply the agent template to this repo. The template's justfile should have an "install" recipe
+      # that configures the repo for the agent (e.g., copies CLAUDE.md, removes files, runs copier).
+      # IMPORTANT: This step modifies the working directory (adds/modifies files like CLAUDE.md, configs, etc.)
+      - name: Install agent configuration
+        run: |
+          just -f __agent_config__/${{ inputs.agent_config_directory }}/justfile install
+          ls *.md
+
+      # ============================================================================
+      # CRITICAL: Create eval-base branch AFTER installing agent config
+      # ============================================================================
+      # WHY: We need eval_base_branch to be the "clean baseline" that includes
+      # all setup/installation changes. Both eval_base_branch and expt_branch_name
+      # must start from the same state, so that their diff shows ONLY agent changes
+      # (no install noise).
+      #
+      # FLOW:
+      # 1. We checked out at PR base commit (T0)
+      # 2. We installed agent config (modified working directory with setup files)
+      # 3. NOW: Create eval_base_branch at THIS point (T0 + install changes)
+      # 4. Later: Create expt_branch from same point (T0 + install changes)
+      # 5. Agent modifies expt_branch
+      # 6. Result: diff(eval_base, expt) = agent changes ONLY (no setup files)
+      #
+      # If we created eval_base BEFORE install, the diff would include all the
+      # files added by the install step, making it huge and hard to review.
+      # ============================================================================
+      - name: Create or verify eval-base branch
+        run: |
+          # Check if the branch already exists on remote
+          if git ls-remote --exit-code origin "refs/heads/${{ env.eval_base_branch }}" 2>/dev/null; then
+            echo "✓ Branch ${{ env.eval_base_branch }} already exists on remote"
+            echo "  Reusing this baseline for all experiments on issue #${{ inputs.issue_number }}"
+            echo "  (This ensures all agent runs are compared against the same starting point)"
+          else
+            echo "✓ Creating eval-base branch at PR base commit with all setup applied"
+            echo "  Base commit: ${{ steps.pr_base.outputs.base_sha }}"
+            echo "  This is the 'clean baseline' for all experiments on this issue"
+            git checkout -b "${{ env.eval_base_branch }}"
+            git push -u origin "${{ env.eval_base_branch }}"
+            echo "  Pushed ${{ env.eval_base_branch }} to remote"
+          fi
+
+          # Detach HEAD back to base commit for agent work
+          # (We don't commit the install changes to eval_base_branch because they're already
+          #  in the working directory, and expt_branch will be created from the same state)
+          git checkout "${{ steps.pr_base.outputs.base_sha }}"
+          echo "✓ Current HEAD is at base commit (detached): ${{ steps.pr_base.outputs.base_sha }}"
+
+
+      # Create a new branch for this experiment
+      # This branch will be created at the SAME point as eval_base_branch
+      # (PR base commit + agent config setup), so agent changes will be clean.
+      - name: Create new branch
+        run: |
+          # Current working directory state includes agent config setup changes
+          # (not yet committed). When we create expt_branch, it will point to
+          # the same commit as eval_base_branch, and agent changes will be
+          # committed on top of it.
+
+          if git rev-parse --verify "${{ env.expt_branch_name }}" 2>/dev/null; then
+            if [ "${{ inputs.force_new_branch }}" = "true" ]; then
+              echo "Branch ${{ env.expt_branch_name }} already exists; deleting (force_new_branch=true)"
+              git branch -D "${{ env.expt_branch_name }}"
+            else
+              echo "ERROR: Branch ${{ env.expt_branch_name }} exists and force_new_branch=false"
+              echo "Either delete the branch manually, or set force_new_branch=true"
+              exit 1
+            fi
+          fi
+
+          echo "Creating experiment branch: ${{ env.expt_branch_name }}"
+          git checkout -b "${{ env.expt_branch_name }}"
+          echo "✓ Experiment branch ready at commit: ${{ steps.pr_base.outputs.base_sha }}"
+          echo "  (Working directory contains agent config setup files)"
+
+      # Configure git identity for commits
+      - name: Configure git identity
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      # Gather issue title, body, and comments up until the PR was created (for fair evaluation)
+      - name: Gather issue context
+        id: issue_context
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
+        run: |
+          PR_CREATED_AT="${{ steps.pr_base.outputs.pr_created_at }}"
+
+          # Fetch issue and filter comments to only those before PR creation
+          gh -R ${{ inputs.issue_repo || github.repository }} issue view ${{ inputs.issue_number }} --json url,title,body,comments | \
+            jq --arg cutoff "$PR_CREATED_AT" '.comments = [.comments[] | select(.createdAt <= $cutoff)]' > __issue_context__.json
+
+          # Log filtering results
+          TOTAL_COMMENTS=$(gh -R ${{ inputs.issue_repo || github.repository }} issue view ${{ inputs.issue_number }} --json comments -q '.comments | length')
+          FILTERED_COMMENTS=$(jq '.comments | length' __issue_context__.json)
+          echo "Issue comments: ${FILTERED_COMMENTS} of ${TOTAL_COMMENTS} (filtered to before PR creation at ${PR_CREATED_AT})"
+
+          # Extract issue title and URL for PR metadata
+          ISSUE_TITLE=$(jq -r '.title' __issue_context__.json)
+          ISSUE_URL=$(jq -r '.url' __issue_context__.json)
+          echo "issue_title=${ISSUE_TITLE}" >> $GITHUB_OUTPUT
+          echo "issue_url=${ISSUE_URL}" >> $GITHUB_OUTPUT
+
+          # Also fetch original PR title and URL
+          PR_INFO=$(gh pr view ${{ inputs.pr_number }} --repo ${{ inputs.issue_repo || github.repository }} --json url,title)
+          PR_TITLE=$(echo "$PR_INFO" | jq -r '.title')
+          PR_URL=$(echo "$PR_INFO" | jq -r '.url')
+          echo "pr_title=${PR_TITLE}" >> $GITHUB_OUTPUT
+          echo "pr_url=${PR_URL}" >> $GITHUB_OUTPUT
+
+      # Write the shared agent prompt to a file so both runtimes use identical instructions
+      - name: Write agent prompt
+        run: |
+          cat > __agent_prompt__.md << 'PROMPT'
+          Your job is to address issue #${{ inputs.issue_number }}.
+          First, read the file __issue_context__.json in the current working directory to get the issue title, body, and comments.
+
+          IMPORTANT: You are working in a local copy of ${{ github.repository }}.
+          The issue context was imported from ${{ inputs.issue_repo || github.repository }} for evaluation purposes.
+          Do NOT attempt to clone, checkout, or interact with any remote repositories.
+          Stay in the current working directory and make all changes here.
+
+          On completion, commit your changes locally. Do NOT push - that will be handled automatically.
+          Don't commit files you did not edit.
+
+          After committing, create two files:
+
+          1. ISSUE_COMMENTS.md: Updates on the issue regarding its status. This will be fed back to the originating issue.
+          2. PR_COMMENTS.md: A description of your changes, and the rationale. This will be fed back to the originating PR.
+
+          I will take care of feeding these back to the GitHub repo, you just need to create them. Don't commit them,
+          and don't attempt to interact with the github repo.
+
+          If the original issue is not clear, ask for clarification in ISSUE_COMMENTS.md, and do not
+          commit any changes. The PR_COMMENTS.md can be empty in this case.
+
+          Your PR_COMMENTS.md should be a human-readable description of your changes, and the rationale. Include any checklists
+          you created for yourself and completed. If you performed validation, background research, etc, be sure to mention this.
+
+          Your ISSUE_COMMENTS.md need not replicate what is in PR_COMMENTS.md, and in many cases can be terse but polite, e.g
+          "changes committed in PR #<NN>" (note: use the literal `<NN>` in the output, I will replace it with the actual PR number).
+
+          If the issue is a complex one, you can create a high level summary of the decisions you made. If things are not clear
+          or if you want particular people in the thread to check particular aspects you can mention them.
+
+          Follow any CODE_OF_CONDUCT.md or other relevant files in the repository.
+          PROMPT
+
+      - name: Install Claude Code
+        if: inputs.agent_runtime == 'claude'
+        run: npm install -g @anthropic-ai/claude-code
+
+      - name: Run Claude Code
+        if: inputs.agent_runtime == 'claude'
+        env:
+          CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          # Write a runner script to avoid shell quoting issues
+          cat > /tmp/run-claude.sh << 'SCRIPT'
+          #!/bin/bash
+          cd "$1"
+          PROMPT=$(cat __agent_prompt__.md)
+          claude -p "$PROMPT" \
+            --model "$2" \
+            --dangerously-skip-permissions \
+            --output-format stream-json \
+            --verbose \
+            2>&1 | tee /tmp/claude-trace.json
+          SCRIPT
+          chmod +x /tmp/run-claude.sh
+
+          # Run as non-root to avoid --dangerously-skip-permissions root restriction
+          if [ "$(id -u)" = "0" ]; then
+            useradd -m -s /bin/bash claudeuser 2>/dev/null || true
+            chown -R claudeuser:claudeuser . /tmp
+            su claudeuser -c "/tmp/run-claude.sh $(pwd) ${{ inputs.model }}"
+          else
+            /tmp/run-claude.sh "$(pwd)" "${{ inputs.model }}"
+          fi
+
+      - name: Install and authenticate Codex
+        if: inputs.agent_runtime == 'codex'
+        env:
+          CODEX_AUTH_JSON: ${{ secrets.CODEX_AUTH_JSON }}
+        run: |
+          npm install -g @openai/codex
+          export CODEX_HOME="${HOME}/.codex"
+          mkdir -p "$CODEX_HOME"
+          echo "$CODEX_AUTH_JSON" > "$CODEX_HOME/auth.json"
+          chmod 600 "$CODEX_HOME/auth.json"
+          echo "CODEX_HOME=$CODEX_HOME" >> $GITHUB_ENV
+          # Verify auth.json is valid
+          python3 -c "import json; json.load(open('$CODEX_HOME/auth.json')); print('auth.json valid')"
+
+      - name: Run Codex
+        if: inputs.agent_runtime == 'codex'
+        run: |
+          codex exec "$(cat __agent_prompt__.md)" \
+            --model ${{ inputs.model }} \
+            --sandbox danger-full-access \
+            --json \
+            2>&1 | tee /tmp/codex-trace.json
+
+      - name: Add signature blocks to comment files
+        run: |
+          # Metadata signature includes: model, agent config, iteration number, and link to workflow run
+          # iter_num allows tracking multiple runs of the same configuration (useful for averaging results)
+          SIGNATURE="---
+          🤖 **Generated by ${{ inputs.agent_runtime }} agent**
+          - Runtime: \`${{ inputs.agent_runtime }}\`
+          - Model: \`${{ inputs.model }}\`
+          - Agent config: \`${{ inputs.agent_config_repo || github.repository }}@${{ inputs.agent_config_tag }}:${{ inputs.agent_config_directory }}\`
+          - Iteration: \`${{ inputs.iter_num }}\`
+          - Run: [View workflow run](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})"
+
+          if [ -f "ISSUE_COMMENTS.md" ]; then
+            echo "" >> ISSUE_COMMENTS.md
+            echo "$SIGNATURE" >> ISSUE_COMMENTS.md
+          fi
+
+          if [ -f "PR_COMMENTS.md" ]; then
+            echo "" >> PR_COMMENTS.md
+            echo "$SIGNATURE" >> PR_COMMENTS.md
+          fi
+
+      # Run validation command if specified (e.g., make test)
+      - name: Validate agent changes
+        if: ${{ inputs.validation_command != '' }}
+        run: |
+          echo "Running validation: ${{ inputs.validation_command }}"
+          echo "========================================"
+          ${{ inputs.validation_command }}
+          echo "========================================"
+          echo "Validation passed"
+
+      # Commit and push the branch (even if no changes, to record the attempt)
+      - name: Commit and push branch
+        run: |
+          # Create commit with metadata (full trace is in workflow artifacts, not here)
+          # Avoiding embedding JSON in commit message: quoting issues, size, potential secrets
+          git commit --allow-empty -m "eval-agent: issue #${{ inputs.issue_number }} (${{ env.model_short }}, ${{ env.config_short }})
+
+          Model: ${{ inputs.model }}
+          Issue repo: ${{ inputs.issue_repo || github.repository }}
+          Agent config: ${{ inputs.agent_config_repo || github.repository }}@${{ inputs.agent_config_tag }}:${{ inputs.agent_config_directory }}
+          Iteration: ${{ inputs.iter_num }}
+
+          Artifacts: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}#artifacts"
+
+          # Force push if branch already exists (common for re-runs)
+          if [ "${{ inputs.force_new_branch }}" = "true" ]; then
+            git push -u --force origin "${{ env.expt_branch_name }}"
+          else
+            git push -u origin "${{ env.expt_branch_name }}"
+          fi
+
+      # Create a PR if create_pr is true (targets eval-base branch, NOT main)
+      # This PR is for evaluation only - it shows what the agent changed.
+      - name: Create PR
+        id: create_pr
+        if: ${{ inputs.create_pr == 'true' }}
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
+        run: |
+          # Fetch the eval-base branch to compare against
+          # eval_base_branch is the "clean baseline" with setup applied
+          git fetch origin "${{ env.eval_base_branch }}"
+          echo "Fetched eval-base branch for comparison"
+
+          # Close existing PR if force_new_branch is set
+          if [ "${{ inputs.force_new_branch }}" = "true" ]; then
+            EXISTING_PR=$(gh pr list --head "${{ env.expt_branch_name }}" --base "${{ env.eval_base_branch }}" --json number -q '.[0].number' || echo "")
+            if [ -n "$EXISTING_PR" ]; then
+              echo "Closing existing PR #${EXISTING_PR} (force_new_branch=true)"
+              gh pr close "$EXISTING_PR" --comment "Superseded by new run (force_new_branch=true)"
+            fi
+          fi
+
+          # Get commit messages from agent's work (excluding the eval-agent marker commit)
+          # This now shows ONLY agent changes, not setup/install files
+          # (because both branches start from the same state with setup applied)
+          COMMIT_LOG=$(git log --oneline "origin/${{ env.eval_base_branch }}".."${{ env.expt_branch_name }}" --pretty=format:"- %s" | grep -v "^- eval-agent:" || echo "No commits from agent")
+          echo "Agent commits:"
+          echo "$COMMIT_LOG"
+
+          # Read agent output files
+          ISSUE_COMMENTS=""
+          if [ -f "ISSUE_COMMENTS.md" ]; then
+            ISSUE_COMMENTS=$(cat ISSUE_COMMENTS.md)
+          fi
+
+          PR_COMMENTS=""
+          if [ -f "PR_COMMENTS.md" ]; then
+            PR_COMMENTS=$(cat PR_COMMENTS.md)
+          fi
+
+          # ========================================================================
+          # Apply repo_url_prefix to issue and PR links
+          # ========================================================================
+          # By default, links are prefixed with https://href.li/? to create indirect
+          # redirects. This allows readers to access the original issue/PR but prevents
+          # the GitHub "reciprocal view" from cluttering the original repo with evaluation
+          # PR references. Set repo_url_prefix to empty string to use direct GitHub links.
+          #
+          # Examples:
+          # - With prefix (default): https://href.li/?https://github.com/org/repo/issues/123
+          #   → Works: User clicks link, redirected to real issue
+          #   → Clean: Original issue doesn't show "linked to evaluation PR"
+          # - Without prefix (empty): https://github.com/org/repo/issues/123
+          #   → Works: Direct link to issue
+          #   → Cluttered: Original issue shows evaluation PR in "linked PRs" section
+          # ========================================================================
+          ISSUE_URL="${{ inputs.repo_url_prefix }}${{ steps.issue_context.outputs.issue_url }}"
+          PR_URL_PREFIXED="${{ inputs.repo_url_prefix }}${{ steps.issue_context.outputs.pr_url }}"
+
+          # ========================================================================
+          # Build PR body with both markdown files
+          # KEY INSIGHT: The diff in this PR shows ONLY agent changes
+          #
+          # Why? Because:
+          # - eval_base_branch = PR base commit + agent config setup
+          # - expt_branch_name = PR base commit + agent config setup + agent changes
+          # - Diff = expt - eval_base = agent changes ONLY (no noise)
+          #
+          # This is clean and reviewable, unlike the OLD workflow where eval_base
+          # was created BEFORE setup, making the diff huge with install files.
+          # ========================================================================
+          PR_BODY="**⚠️ EVALUATION ONLY - DO NOT MERGE ⚠️**
+
+          ## Original Issue
+          [#${{ inputs.issue_number }}: ${{ steps.issue_context.outputs.issue_title }}](${ISSUE_URL})
+
+          ## Original PR (human solution)
+          [#${{ inputs.pr_number }}: ${{ steps.issue_context.outputs.pr_title }}](${PR_URL_PREFIXED})
+
+          ## Agent Commits
+          ${COMMIT_LOG}
+
+          **Note**: This PR diff shows ONLY the agent's changes. The baseline is eval_base_branch."
+
+          # Add PR comments section if present
+          if [ -n "$PR_COMMENTS" ]; then
+            PR_BODY="${PR_BODY}
+
+          ## Agent Response - PR Comments
+          ${PR_COMMENTS}"
+          fi
+
+          # Add issue comments section if present
+          if [ -n "$ISSUE_COMMENTS" ]; then
+            PR_BODY="${PR_BODY}
+
+          ## Agent Response - Issue Comments
+          ${ISSUE_COMMENTS}"
+          fi
+
+          # Add experiment config and footer
+          # repo_url_prefix determines whether to use indirect links (href.li) or direct GitHub links
+          REPO_URL_PREFIX_DISPLAY="${{ inputs.repo_url_prefix }}"
+          if [ -z "$REPO_URL_PREFIX_DISPLAY" ]; then
+            REPO_URL_PREFIX_DISPLAY="(direct links - no prefix)"
+          fi
+
+          PR_BODY="${PR_BODY}
+
+          ## Experiment Config
+          | Parameter | Value |
+          |-----------|-------|
+          | Model | \`${{ inputs.model }}\` |
+          | Agent config | \`${{ inputs.agent_config_repo || github.repository }}@${{ inputs.agent_config_tag }}:${{ inputs.agent_config_directory }}\` |
+          | Iteration | \`${{ inputs.iter_num }}\` |
+          | URL prefix | \`${REPO_URL_PREFIX_DISPLAY}\` |
+          | Base branch | \`${{ env.eval_base_branch }}\` |
+
+          See workflow artifacts for full agent trace."
+
+          # Create the PR with iteration number included in the title
+          # This helps track multiple runs of the same configuration (iter_num=1, 2, 3, etc.)
+          PR_URL=$(gh pr create \
+            --base "${{ env.eval_base_branch }}" \
+            --head "${{ env.expt_branch_name }}" \
+            --title "[DO NOT MERGE] eval #${{ inputs.issue_number }} i:${{ inputs.iter_num }}: ${{ steps.issue_context.outputs.issue_title }} (${{ env.model_short }}, ${{ env.config_short }})" \
+            --body "$PR_BODY")
+
+          # Extract PR number from URL
+          CREATED_PR_NUMBER=$(echo "$PR_URL" | grep -oE '[0-9]+$')
+          echo "created_pr_url=${PR_URL}" >> $GITHUB_OUTPUT
+          echo "created_pr_number=${CREATED_PR_NUMBER}" >> $GITHUB_OUTPUT
+          echo "Created PR #${CREATED_PR_NUMBER}: ${PR_URL}"
+
+      - name: Upload issue context
+        uses: actions/upload-artifact@v4
+        with:
+          name: issue-context-${{ github.run_id }}
+          path: __issue_context__.json
+          retention-days: ${{ inputs.artifact_retention_days }}
+
+      - name: Upload Claude output
+        if: inputs.agent_runtime == 'claude'
+        uses: actions/upload-artifact@v4
+        with:
+          name: claude-response-${{ github.run_id }}
+          path: /tmp/claude-trace.json
+          retention-days: ${{ inputs.artifact_retention_days }}
+
+      - name: Upload issue comments
+        uses: actions/upload-artifact@v4
+        if: ${{ hashFiles('ISSUE_COMMENTS.md') != '' }}
+        with:
+          name: issue-comments-${{ github.run_id }}
+          path: ISSUE_COMMENTS.md
+          retention-days: ${{ inputs.artifact_retention_days }}
+
+      - name: Upload PR comments
+        uses: actions/upload-artifact@v4
+        if: ${{ hashFiles('PR_COMMENTS.md') != '' }}
+        with:
+          name: pr-comments-${{ github.run_id }}
+          path: PR_COMMENTS.md
+          retention-days: ${{ inputs.artifact_retention_days }}
+
+      # Save run metadata for later analysis
+      - name: Save run metadata
+        run: |
+          cat > /tmp/run-metadata.json << 'EOF'
+          {
+            "run_id": ${{ github.run_id }},
+            "repo": "${{ github.repository }}",
+            "workflow": "${{ github.workflow }}",
+            "inputs": {
+              "issue_repo": "${{ inputs.issue_repo || github.repository }}",
+              "issue_number": "${{ inputs.issue_number }}",
+              "pr_number": "${{ inputs.pr_number }}",
+              "model": "${{ inputs.model }}",
+              "agent_config_repo": "${{ inputs.agent_config_repo || github.repository }}",
+              "agent_config_tag": "${{ inputs.agent_config_tag }}",
+              "agent_config_directory": "${{ inputs.agent_config_directory }}",
+              "iter_num": "${{ inputs.iter_num }}",
+              "repo_url_prefix": "${{ inputs.repo_url_prefix }}",
+              "create_pr": "${{ inputs.create_pr }}",
+              "force_new_branch": "${{ inputs.force_new_branch }}"
+            },
+            "branch": "${{ env.expt_branch_name }}",
+            "created_pr_number": "${{ steps.create_pr.outputs.created_pr_number || '' }}",
+            "created_pr_url": "${{ steps.create_pr.outputs.created_pr_url || '' }}",
+            "original_issue_url": "${{ steps.issue_context.outputs.issue_url }}",
+            "original_pr_url": "${{ steps.issue_context.outputs.pr_url }}"
+          }
+          EOF
+
+      - name: Upload run metadata
+        uses: actions/upload-artifact@v4
+        with:
+          name: run-metadata-${{ github.run_id }}
+          path: /tmp/run-metadata.json
+          retention-days: ${{ inputs.artifact_retention_days }}
+
+      # Persist traces permanently to the repo (artifacts expire, these don't)
+      # Uses git worktree + push to handle large files (agent traces can be MBs)
+      - name: Persist traces to repo
+        if: always()
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
+        run: |
+          TRACE_DIR="traces/${{ github.run_id }}"
+          REPO="${{ github.repository }}"
+          MSG="traces(${{ inputs.issue_number }}/${{ inputs.model }}): run ${{ github.run_id }}"
+
+          # Clone just master (shallow) into a temp dir for the commit
+          WORK="/tmp/trace-push"
+          rm -rf "$WORK"
+          git clone --depth=1 --branch=master "https://x-access-token:${GH_TOKEN}@github.com/${REPO}.git" "$WORK"
+
+          mkdir -p "$WORK/$TRACE_DIR"
+
+          # Copy trace files
+          for src in __issue_context__.json /tmp/run-metadata.json ISSUE_COMMENTS.md PR_COMMENTS.md /tmp/claude-trace.json /tmp/codex-trace.json; do
+            if [ -f "$src" ]; then
+              fname=$(basename "$src")
+              # Rename runtime-specific traces to agent-trace.json
+              [ "$fname" = "claude-trace.json" ] && fname="agent-trace.json"
+              [ "$fname" = "codex-trace.json" ] && fname="agent-trace.json"
+              cp "$src" "$WORK/$TRACE_DIR/$fname"
+              echo "  Added $fname ($(wc -c < "$src") bytes)"
+            fi
+          done
+
+          # Commit and push
+          cd "$WORK"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add "$TRACE_DIR"
+          git commit -m "$MSG" || echo "No traces to commit"
+          git push origin master || echo "Warning: failed to push traces"
+
+      # Add a comment to the PR linking to the traces folder
+      - name: Comment trace link on PR
+        if: steps.create_pr.outputs.created_pr_number != ''
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
+        run: |
+          TRACE_URL="https://github.com/${{ github.repository }}/tree/master/traces/${{ github.run_id }}"
+          gh pr comment "${{ steps.create_pr.outputs.created_pr_number }}" \
+            --repo "${{ github.repository }}" \
+            --body "📋 **Traces**: [traces/${{ github.run_id }}](${TRACE_URL})"
