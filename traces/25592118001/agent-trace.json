@@ -1,0 +1,11 @@
+Reading additional input from stdin...
+2026-05-09T04:52:03.190786Z ERROR codex_core::session: failed to load skill /__w/eval-ont-agent-mondo/eval-ont-agent-mondo/.claude/skills/metadata-checker/SKILL.md: invalid YAML: mapping values are not allowed in this context at line 2 column 289
+2026-05-09T04:52:03.190808Z ERROR codex_core::session: failed to load skill /__w/eval-ont-agent-mondo/eval-ont-agent-mondo/.claude/skills/design-pattern-advisor/SKILL.md: invalid YAML: mapping values are not allowed in this context at line 2 column 277
+2026-05-09T04:52:03.190813Z ERROR codex_core::session: failed to load skill /__w/eval-ont-agent-mondo/eval-ont-agent-mondo/.claude/skills/task-coordinator/SKILL.md: invalid YAML: mapping values are not allowed in this context at line 2 column 222
+2026-05-09T04:52:03.190817Z ERROR codex_core::session: failed to load skill /__w/eval-ont-agent-mondo/eval-ont-agent-mondo/.claude/skills/identifier-validator/SKILL.md: invalid YAML: mapping values are not allowed in this context at line 2 column 467
+2026-05-09T04:52:03.190821Z ERROR codex_core::session: failed to load skill /__w/eval-ont-agent-mondo/eval-ont-agent-mondo/.claude/skills/ontology-reasoner/SKILL.md: invalid YAML: mapping values are not allowed in this context at line 2 column 210
+2026-05-09T04:52:03.190825Z ERROR codex_core::session: failed to load skill /__w/eval-ont-agent-mondo/eval-ont-agent-mondo/.claude/skills/deep-research-specialist/SKILL.md: invalid YAML: mapping values are not allowed in this context at line 2 column 392
+{"type":"thread.started","thread_id":"019e0b14-0b47-7cf1-951b-b923e5e251fe"}
+{"type":"turn.started"}
+{"type":"error","message":"{\"type\":\"error\",\"status\":400,\"error\":{\"type\":\"invalid_request_error\",\"message\":\"The 'codex-mini-latest' model is not supported when using Codex with a ChatGPT account.\"}}"}
+{"type":"turn.failed","error":{"message":"{\"type\":\"error\",\"status\":400,\"error\":{\"type\":\"invalid_request_error\",\"message\":\"The 'codex-mini-latest' model is not supported when using Codex with a ChatGPT account.\"}}"}}
