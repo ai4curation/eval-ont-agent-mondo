@@ -1,0 +1,37 @@
+{
+  "body": "**Mondo term (ID and Label)**\n'heart, malformation of'\nMONDO:0009327\n\n**Reason for deprecation**\nThis term is a phenotype or a historical term (probably a placeholder for other more specific diseases).\nThe two OMIM xrefs that were equivalent to this term have been moved to two separate OMIM terms, indicating that they were referring to different diseases. \nOMIM:140500 --> OMIM:306955 - 'congenital heart defects, multiple types, 1, X-linked' (MONDO:0800321)\nOMIM:234750 --> OMIM:614980 - 'congenital heart defects, multiple types, 2' (MONDO:0014000)\n\n**Suggested term to consider**\n'heart disorder' (MONDO:0005267)\n\n**Your nano-attribution (ORCID)**\nIf you don't have an ORCID, you can sign up for one [here](https://orcid.org/)\n\n",
+  "comments": [
+    {
+      "id": "IC_kwDOBjach87Twj2e",
+      "author": {
+        "login": "sabrinatoro"
+      },
+      "authorAssociation": "MEMBER",
+      "body": "@kanems \nThis term corresponds to MEDGEN:6748. \nPlease let me know if you have any concerns about this term being obsoleted. Thank you! ",
+      "createdAt": "2025-11-19T13:28:59Z",
+      "includesCreatedEdit": false,
+      "isMinimized": false,
+      "minimizedReason": "",
+      "reactionGroups": [],
+      "url": "https://github.com/monarch-initiative/mondo/issues/9771#issuecomment-3552722334",
+      "viewerDidAuthor": false
+    },
+    {
+      "id": "IC_kwDOBjach87TxFfg",
+      "author": {
+        "login": "kanems"
+      },
+      "authorAssociation": "COLLABORATOR",
+      "body": "@sabrinatoro this is not a problem we'll update the OMIM mappings. but the MedGen concept will remain active for HPO. thanks for the heads up",
+      "createdAt": "2025-11-19T14:00:49Z",
+      "includesCreatedEdit": false,
+      "isMinimized": false,
+      "minimizedReason": "",
+      "reactionGroups": [],
+      "url": "https://github.com/monarch-initiative/mondo/issues/9771#issuecomment-3552860128",
+      "viewerDidAuthor": false
+    }
+  ],
+  "title": "[Obsolete] 'heart, malformation of' (MONDO:0009327)",
+  "url": "https://github.com/monarch-initiative/mondo/issues/9771"
+}
