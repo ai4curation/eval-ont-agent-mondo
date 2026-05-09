@@ -1,0 +1,23 @@
+{
+  "run_id": 25592437739,
+  "repo": "ai4curation/eval-ont-agent-mondo",
+  "workflow": "Evaluate an agent on an issue",
+  "inputs": {
+    "issue_repo": "monarch-initiative/mondo",
+    "issue_number": "9892",
+    "pr_number": "10206",
+    "model": "claude-sonnet-4-5-20250929",
+    "agent_config_repo": "ai4curation/mondo-agent-config",
+    "agent_config_tag": "v2-noskills",
+    "agent_config_directory": ".",
+    "iter_num": "1",
+    "repo_url_prefix": "https://href.li/?",
+    "create_pr": "true",
+    "force_new_branch": "true"
+  },
+  "branch": "scribe-v1-ai4curation-mondo-agent-config-v2-noskills-.-claude-sonnet-4-5-20250929-iter1-issue-9892",
+  "created_pr_number": "12",
+  "created_pr_url": "https://github.com/ai4curation/eval-ont-agent-mondo/pull/12",
+  "original_issue_url": "https://github.com/monarch-initiative/mondo/issues/9892",
+  "original_pr_url": "https://github.com/monarch-initiative/mondo/pull/10206"
+}
