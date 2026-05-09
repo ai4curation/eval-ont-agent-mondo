@@ -88,13 +88,15 @@ on:
         required: false
         default: "."
       agent_runtime:
-        description: "Agent runtime to use (claude or codex)"
+        description: "Agent runtime to use (claude, codex, opencode, or pi)"
         required: false
         default: "claude"
         type: choice
         options:
           - claude
           - codex
+          - opencode
+          - pi
       model:
         description: "Model to use (e.g. claude-sonnet-4-5-20250929, gpt-5.4)"
         required: true
@@ -483,6 +485,72 @@ jobs:
             $REASONING_FLAG \
             2>&1 | tee /tmp/codex-trace.json
 
+      - name: Install and authenticate OpenCode
+        if: inputs.agent_runtime == 'opencode'
+        env:
+          CODEX_AUTH_JSON: ${{ secrets.CODEX_AUTH_JSON }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          curl -fsSL https://opencode.ai/install | bash
+          echo "$HOME/.opencode/bin" >> $GITHUB_PATH
+          # OpenCode reads Codex auth for OpenAI models
+          export CODEX_HOME="${HOME}/.codex"
+          mkdir -p "$CODEX_HOME"
+          if [ -n "$CODEX_AUTH_JSON" ]; then
+            echo "$CODEX_AUTH_JSON" > "$CODEX_HOME/auth.json"
+            chmod 600 "$CODEX_HOME/auth.json"
+          fi
+
+      - name: Run OpenCode
+        if: inputs.agent_runtime == 'opencode'
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          export PATH="$HOME/.opencode/bin:$PATH"
+          opencode run "$(cat __agent_prompt__.md)" \
+            --model ${{ inputs.model }} \
+            --format json \
+            2>&1 | tee /tmp/opencode-trace.json
+
+      - name: Install Pi
+        if: inputs.agent_runtime == 'pi'
+        run: |
+          # Pi requires Node >= 20.6.0 (unicode regex 'v' flag)
+          # Install recent Node via nvm if container has older version
+          NODE_VER=$(node --version 2>/dev/null | sed 's/v//' | cut -d. -f1)
+          if [ -z "$NODE_VER" ] || [ "$NODE_VER" -lt 20 ]; then
+            curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
+            export NVM_DIR="$HOME/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+            nvm install 22
+            nvm use 22
+            echo "$NVM_DIR/versions/node/$(nvm current)/bin" >> $GITHUB_PATH
+          fi
+          npm install -g @earendil-works/pi-coding-agent
+
+      - name: Run Pi
+        if: inputs.agent_runtime == 'pi'
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          # Parse provider/model from inputs.model (e.g. "openai/gpt-5.4" -> provider=openai model=gpt-5.4)
+          FULL_MODEL="${{ inputs.model }}"
+          if echo "$FULL_MODEL" | grep -q "/"; then
+            PROVIDER=$(echo "$FULL_MODEL" | cut -d/ -f1)
+            MODEL=$(echo "$FULL_MODEL" | cut -d/ -f2-)
+          else
+            PROVIDER="openai"
+            MODEL="$FULL_MODEL"
+          fi
+          pi -p "$(cat __agent_prompt__.md)" \
+            --provider "$PROVIDER" \
+            --model "$MODEL" \
+            --mode json \
+            --no-session \
+            2>&1 | tee /tmp/pi-trace.json
+
       - name: Add signature blocks to comment files
         run: |
           # Metadata signature includes: model, agent config, iteration number, and link to workflow run
@@ -756,12 +824,14 @@ jobs:
           mkdir -p "$WORK/$TRACE_DIR"
 
           # Copy trace files
-          for src in __issue_context__.json /tmp/run-metadata.json ISSUE_COMMENTS.md PR_COMMENTS.md /tmp/claude-trace.json /tmp/codex-trace.json; do
+          for src in __issue_context__.json /tmp/run-metadata.json ISSUE_COMMENTS.md PR_COMMENTS.md /tmp/claude-trace.json /tmp/codex-trace.json /tmp/opencode-trace.json /tmp/pi-trace.json; do
             if [ -f "$src" ]; then
               fname=$(basename "$src")
               # Rename runtime-specific traces to agent-trace.json
               [ "$fname" = "claude-trace.json" ] && fname="agent-trace.json"
               [ "$fname" = "codex-trace.json" ] && fname="agent-trace.json"
+              [ "$fname" = "opencode-trace.json" ] && fname="agent-trace.json"
+              [ "$fname" = "pi-trace.json" ] && fname="agent-trace.json"
               cp "$src" "$WORK/$TRACE_DIR/$fname"
               echo "  Added $fname ($(wc -c < "$src") bytes)"
             fi
