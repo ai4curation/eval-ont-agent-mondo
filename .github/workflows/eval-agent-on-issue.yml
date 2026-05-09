@@ -99,7 +99,7 @@ on:
         description: "Model to use (e.g. claude-sonnet-4-5-20250929, gpt-5.4)"
         required: true
       reasoning_effort:
-        description: "Reasoning effort for Codex (minimal, low, medium, high, xhigh). Default: medium."
+        description: "Reasoning effort level. Codex: minimal/low/medium/high/xhigh. Claude: low/medium/high/xhigh/max. Leave empty for defaults."
         required: false
         default: ""
       force_new_branch:
@@ -427,15 +427,21 @@ jobs:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: |
           # Write a runner script to avoid shell quoting issues
-          cat > /tmp/run-claude.sh << 'SCRIPT'
+          EFFORT_FLAG=""
+          if [ -n "${{ inputs.reasoning_effort }}" ]; then
+            EFFORT_FLAG="--effort ${{ inputs.reasoning_effort }}"
+          fi
+
+          cat > /tmp/run-claude.sh << SCRIPT
           #!/bin/bash
-          cd "$1"
-          PROMPT=$(cat __agent_prompt__.md)
-          claude -p "$PROMPT" \
-            --model "$2" \
+          cd "\$1"
+          PROMPT=\$(cat __agent_prompt__.md)
+          claude -p "\$PROMPT" \
+            --model "\$2" \
             --dangerously-skip-permissions \
             --output-format stream-json \
             --verbose \
+            $EFFORT_FLAG \
             2>&1 | tee /tmp/claude-trace.json
           SCRIPT
           chmod +x /tmp/run-claude.sh
