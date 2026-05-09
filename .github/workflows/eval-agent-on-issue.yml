@@ -98,6 +98,10 @@ on:
       model:
         description: "Model to use (e.g. claude-sonnet-4-5-20250929, gpt-5.4)"
         required: true
+      reasoning_effort:
+        description: "Reasoning effort for Codex (minimal, low, medium, high, xhigh). Default: medium."
+        required: false
+        default: ""
       force_new_branch:
         description: "Whether to force a new branch. Defaults to false."
         required: false
@@ -462,10 +466,15 @@ jobs:
       - name: Run Codex
         if: inputs.agent_runtime == 'codex'
         run: |
+          REASONING_FLAG=""
+          if [ -n "${{ inputs.reasoning_effort }}" ]; then
+            REASONING_FLAG="-c model_reasoning_effort=${{ inputs.reasoning_effort }}"
+          fi
           codex exec "$(cat __agent_prompt__.md)" \
             --model ${{ inputs.model }} \
             --sandbox danger-full-access \
             --json \
+            $REASONING_FLAG \
             2>&1 | tee /tmp/codex-trace.json
 
       - name: Add signature blocks to comment files
