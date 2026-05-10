@@ -1,0 +1,22 @@
+{
+  "body": "### Label\n\nSYCE1-related gametogenic failure\n\n### Synonyms\n\n_No response_\n\n### Synonym type\n\nNone\n\n### Definition\n\nIndividuals with variants in SYCE1 may present with varying phenotypes. 46XY individuals can present with non-obstructive azoospermia due to maturation arrest/meiotic failure. 46XX individuals can present with primary ovarian insufficiency (POI). \n\n### Parent term\n\nNew term has the same parents as MONDO:0014844 premature ovarian failure 12 and MONDO:0014847 spermatogenic failure 15\n\n### Children term(s)\n\n_No response_\n\n### ORCID Identifier\n\n_No response_\n\n### Website URL\n\n_No response_\n\n### Additional comments\n\nRequested by ClinGen's Male Infertility GCEP \n\n@ErinRiggs ",
+  "comments": [
+    {
+      "id": "IC_kwDOBjach87hUhil",
+      "author": {
+        "login": "GabrielleGCA"
+      },
+      "authorAssociation": "NONE",
+      "body": "Here is the link to the Male Infertility GCEP webpage: https://www.clinicalgenome.org/affiliation/40073/\n\nThank you!\nGabrielle ",
+      "createdAt": "2026-01-21T18:09:15Z",
+      "includesCreatedEdit": false,
+      "isMinimized": false,
+      "minimizedReason": "",
+      "reactionGroups": [],
+      "url": "https://github.com/monarch-initiative/mondo/issues/9864#issuecomment-3780253861",
+      "viewerDidAuthor": false
+    }
+  ],
+  "title": "Request for new term SYCE1-related gametogenic failure",
+  "url": "https://github.com/monarch-initiative/mondo/issues/9864"
+}
