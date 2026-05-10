@@ -999,7 +999,7 @@ all_equivalencies: imports/equivalencies.owl  imports/equivalencies.obo imports/
 imports/equivalencies.owl: ../sparql/construct/construct-ecs-from-xrefs.sparql $(SRC)
 	$(ROBOT) merge -i $(SRC) query -c $< $@.tmp.ttl -f ttl && $(FIX_URIS_IN_PLACE)  $@.tmp.ttl && $(ROBOT) annotate -i $@.tmp.ttl -a $(PV_CC0) -O $(OBO)/mondo/$@ -o $@
 imports/equivalencies.obo: imports/equivalencies.owl
-	$(ROBOT) convert -i $< -o $@
+	$(ROBOT) convert -i $< -o $@ && perl -pi -e 's@^id: ADRENAL:GLAND$$@id: http://oncotree.mskcc.org/api/tumorTypes/search/code/ADRENAL_GLAND@' $@
 
 clean_imports: $(patsubst %, clean-mirror-%, $(ONTOLOGY_IMPORTS))
 clean-mirror-%:
