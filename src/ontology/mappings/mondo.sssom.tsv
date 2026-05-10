@@ -30,7 +30,7 @@
 #   OMIM: https://omim.org/entry/
 #   OMIMPS: https://omim.org/phenotypicSeries/PS
 #   OMO: http://purl.obolibrary.org/obo/OMO_
-#   ONCOTREE: http://purl.obolibrary.org/obo/mondo/mappings/unknown_prefix/ONCOTREE/
+#   ONCOTREE: http://oncotree.mskcc.org/api/tumorTypes/search/code/
 #   Orphanet: http://www.orpha.net/ORDO/Orphanet_
 #   PMID: http://purl.obolibrary.org/obo/mondo/mappings/unknown_prefix/PMID/
 #   RO: http://purl.obolibrary.org/obo/RO_

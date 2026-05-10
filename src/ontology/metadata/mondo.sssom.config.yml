@@ -49,7 +49,7 @@ curie_map:
   MEDDRA: "http://purl.obolibrary.org/obo/mondo/mappings/unknown_prefix/MEDDRA/"
   # ncithesaurus: "http://purl.obolibrary.org/obo/mondo/mappings/unknown_prefix/ncithesaurus/"
   COHD: "http://purl.obolibrary.org/obo/mondo/mappings/unknown_prefix/COHD/"
-  ONCOTREE: "http://purl.obolibrary.org/obo/mondo/mappings/unknown_prefix/ONCOTREE/"
+  ONCOTREE: "http://oncotree.mskcc.org/api/tumorTypes/search/code/"
   ICD9: "http://purl.obolibrary.org/obo/mondo/mappings/unknown_prefix/ICD9/"
   NDFRT: "http://purl.obolibrary.org/obo/mondo/mappings/unknown_prefix/NDFRT/"
   ICD9CM: "http://purl.obolibrary.org/obo/mondo/mappings/unknown_prefix/ICD9CM/"
