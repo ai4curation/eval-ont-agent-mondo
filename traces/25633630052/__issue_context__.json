@@ -1,0 +1,22 @@
+{
+  "body": "close #9413\r\n\r\n[Notes ](https://docs.google.com/document/d/1K7zHjzHfp2K635P1GrkBx15YCJOxp-BeInX5oKKqOpU/edit?tab=t.0)\r\n\r\nmerged MONDO:0100317 into MONDO:0014306 \r\n- relabeled MONDO:0014306 to **deficiency of adenosine deaminase 2** based on request from DADA2 Foundation and discussion with ClinGen (Jonathan and Courtney)\r\n\r\n\r\nremoved SCof 'has material basis in germline mutation in' some ADA2 from Sneddon syndrome\r\n- should it be annotated under excluded SCof'?\r\n\r\n",
+  "comments": [
+    {
+      "id": "IC_kwDOBjach87hRQpX",
+      "author": {
+        "login": "MeeSiing"
+      },
+      "authorAssociation": "MEMBER",
+      "body": "@sabrinatoro I removed the excluded SCof annotation because it is a remnant from the merge. FYI, this commit comes with a lot of gene annotations which are not my changes. ",
+      "createdAt": "2026-01-21T16:26:51Z",
+      "includesCreatedEdit": false,
+      "isMinimized": false,
+      "minimizedReason": "",
+      "reactionGroups": [],
+      "url": "https://github.com/monarch-initiative/mondo/pull/9880#issuecomment-3779398231",
+      "viewerDidAuthor": false
+    }
+  ],
+  "title": "Merge MONDO:0100317 into MONDO:0014306 ",
+  "url": "https://github.com/monarch-initiative/mondo/pull/9880"
+}
