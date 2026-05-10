@@ -301,14 +301,24 @@ jobs:
           if git ls-remote --exit-code origin "refs/heads/${{ env.eval_base_branch }}" 2>/dev/null; then
             echo "✓ Branch ${{ env.eval_base_branch }} already exists on remote"
             echo "  Reusing this baseline for all experiments on issue #${{ inputs.issue_number }}"
-            echo "  (This ensures all agent runs are compared against the same starting point)"
           else
             echo "✓ Creating eval-base branch at PR base commit with all setup applied"
             echo "  Base commit: ${{ steps.pr_base.outputs.base_sha }}"
-            echo "  This is the 'clean baseline' for all experiments on this issue"
             git checkout -b "${{ env.eval_base_branch }}"
-            git push -u origin "${{ env.eval_base_branch }}"
-            echo "  Pushed ${{ env.eval_base_branch }} to remote"
+            # Push with force-if-includes to handle race condition:
+            # if another run already pushed this branch, just continue
+            if ! git push -u origin "${{ env.eval_base_branch }}" 2>/dev/null; then
+              echo "  Push failed (likely another run created it first) — verifying it exists"
+              git fetch origin
+              if git ls-remote --exit-code origin "refs/heads/${{ env.eval_base_branch }}" 2>/dev/null; then
+                echo "  ✓ Confirmed: branch exists on remote (created by concurrent run)"
+              else
+                echo "  ✗ Branch still doesn't exist after failed push — real error"
+                exit 1
+              fi
+            else
+              echo "  Pushed ${{ env.eval_base_branch }} to remote"
+            fi
           fi
 
           # Detach HEAD back to base commit for agent work
@@ -724,13 +734,22 @@ jobs:
 
           See workflow artifacts for full agent trace."
 
-          # Create the PR with iteration number included in the title
-          # This helps track multiple runs of the same configuration (iter_num=1, 2, 3, etc.)
+          # Create the PR (handle race condition: if PR already exists for this branch, find it)
           PR_URL=$(gh pr create \
             --base "${{ env.eval_base_branch }}" \
             --head "${{ env.expt_branch_name }}" \
             --title "[DO NOT MERGE] eval #${{ inputs.issue_number }} i:${{ inputs.iter_num }}: ${{ steps.issue_context.outputs.issue_title }} (${{ env.model_short }}, ${{ env.config_short }})" \
-            --body "$PR_BODY")
+            --body "$PR_BODY" 2>&1) || {
+            # PR creation failed — check if one already exists for this branch
+            EXISTING_PR=$(gh pr list --head "${{ env.expt_branch_name }}" --base "${{ env.eval_base_branch }}" --json url -q '.[0].url' 2>/dev/null)
+            if [ -n "$EXISTING_PR" ]; then
+              echo "PR already exists (concurrent run): $EXISTING_PR"
+              PR_URL="$EXISTING_PR"
+            else
+              echo "PR creation failed and no existing PR found"
+              exit 1
+            fi
+          }
 
           # Extract PR number from URL
           CREATED_PR_NUMBER=$(echo "$PR_URL" | grep -oE '[0-9]+$')
