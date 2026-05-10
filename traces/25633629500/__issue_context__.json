@@ -1,0 +1,22 @@
+{
+  "body": "**Preferred gene-related syndrome label**\n_TAB2_-related syndromic congenital heart disease\n\n\n**Synonyms:**\ncardiac anomalies-short stature-joint hypermobility-facial dysmorphism syndrome due to TAB2 mutation, MONDO:0971094\ncongenital heart defects, multiple types, 2; MONDO:0014000\n\n**Parent term:**\ncongenital heart disease, MONDO:0005453\n\n**Definition:**\n_TAB2_-related syndromic congenital heart disease is characterized by congenital heart disease variable presenting with additional features including polyvalvular heart disease, growth failure, joint hypermobility, hypotonia, and hearing loss (PMIDs: 20493459, 27452334, 28386937, 31959127, 31981616, 34741306, 34456334, 34995729, 37153890). \n\n**Definition source:**\nPMIDs: 20493459, 27452334, 28386937, 31959127, 31981616, 34741306, 34456334, 34995729, 37153890\n\n**Children terms (if applicable)** Should any existing terms be re-classified as children underneath this new proposed term? \n\n**Your nano-attribution (ORCID) or URL for a working group:** ClinGen Congenital Heart Disease GCEP\nhttps://clinicalgenome.org/affiliation/40130/\n\n\n",
+  "comments": [
+    {
+      "id": "IC_kwDOBjach872snea",
+      "author": {
+        "login": "katiermullen"
+      },
+      "authorAssociation": "MEMBER",
+      "body": "@kezang-tshering thank you for this issue! I have added the clingen preferred name and definition to MONDO:0014000. Since it appears that MONDO:0971094 represents the same concept as MONDO:0014000, I have added MONDO:0971094 to the obsoletion list. \n\nPlease let me know if you have any questions or concerns. ",
+      "createdAt": "2026-03-26T23:04:03Z",
+      "includesCreatedEdit": false,
+      "isMinimized": false,
+      "minimizedReason": "",
+      "reactionGroups": [],
+      "url": "https://github.com/monarch-initiative/mondo/issues/9876#issuecomment-4138891162",
+      "viewerDidAuthor": false
+    }
+  ],
+  "title": "[NTR/gene] TAB2-related syndromic congenital heart disease",
+  "url": "https://github.com/monarch-initiative/mondo/issues/9876"
+}
