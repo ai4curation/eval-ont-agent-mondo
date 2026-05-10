@@ -994,12 +994,13 @@ imports/external_definitions.owl: ../sparql/construct/construct-embedded-definit
 	$(ROBOT) merge -i $(SRC) query -c $< $@.tmp.ttl -f ttl && $(ROBOT) annotate -i $@.tmp.ttl -O $(OBO)/mondo/$@ -o $@
 
 FIX_URIS_IN_PLACE = perl -pi -ne $(FIX_URI_EXPR)
+FIX_EQUIVALENCIES_OBO_EXPR = 's@^id: ADRENAL:GLAND$$@id: http://oncotree.mskcc.org/api/tumorTypes/search/code/ADRENAL_GLAND@'
 
 all_equivalencies: imports/equivalencies.owl  imports/equivalencies.obo imports/equivalencies.json
 imports/equivalencies.owl: ../sparql/construct/construct-ecs-from-xrefs.sparql $(SRC)
 	$(ROBOT) merge -i $(SRC) query -c $< $@.tmp.ttl -f ttl && $(FIX_URIS_IN_PLACE)  $@.tmp.ttl && $(ROBOT) annotate -i $@.tmp.ttl -a $(PV_CC0) -O $(OBO)/mondo/$@ -o $@
 imports/equivalencies.obo: imports/equivalencies.owl
-	$(ROBOT) convert -i $< -o $@
+	$(ROBOT) convert -i $< -o $@ && perl -pi -ne $(FIX_EQUIVALENCIES_OBO_EXPR) $@
 
 clean_imports: $(patsubst %, clean-mirror-%, $(ONTOLOGY_IMPORTS))
 clean-mirror-%:

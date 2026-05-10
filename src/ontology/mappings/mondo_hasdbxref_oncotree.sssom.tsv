@@ -1,6 +1,6 @@
 # curie_map:
 #   MONDO: http://purl.obolibrary.org/obo/MONDO_
-#   ONCOTREE: http://purl.obolibrary.org/obo/mondo/mappings/unknown_prefix/ONCOTREE/
+#   ONCOTREE: http://oncotree.mskcc.org/api/tumorTypes/search/code/
 #   oboInOwl: http://www.geneontology.org/formats/oboInOwl#
 #   owl: http://www.w3.org/2002/07/owl#
 #   rdf: http://www.w3.org/1999/02/22-rdf-syntax-ns#
