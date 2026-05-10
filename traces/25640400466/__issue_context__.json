@@ -1,0 +1,6 @@
+{
+  "body": "**Mondo term (ID and Label)**\nAutosomal recessive extra-oral halitosis MONDO:0034186\n\n**Reason for deprecation**\nORDO:562538 (exact match on Mondo:0034186) reports it is an exact match to OMIM 618148 (exact match to MONDO:0029144)\n\n**Term to be merged with**\nMONDO:0029144 Extraoral halitosis due to methanethiol oxidase deficiency\n\n**Your nano-attribution (ORCID)**\nIf you don't have an ORCID, you can sign up for one [here](https://orcid.org/)\n",
+  "comments": [],
+  "title": "[Merge]Extraoral halitosis due to methanethiol oxidase deficiency & Autosomal recessive extra-oral halitosis",
+  "url": "https://github.com/monarch-initiative/mondo/issues/9842"
+}
