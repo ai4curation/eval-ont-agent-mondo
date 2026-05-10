@@ -1,0 +1,6 @@
+{
+  "body": "close #9811 close #9812\r\n\r\nI added 'macrozoospermia with multiflagellar polyploid spermatozoa' as an exact synonym to MONDO:0009461\r\n- added Clingen preferred label and ClinGen Male Infertility GCEP as dbxref\r\n- added term tracker\r\n\r\nI revised the definition for MONDO:0015746 male infertility due to globozoospermia\r\n- added  ClinGen Male Infertility GCEP as dbxref\r\n- added term tracker",
+  "comments": [],
+  "title": "relabel MONDO:0009461 spermatogenic failure 5 and revise definition MONDO:0015746 male infertility due to globozoospermia",
+  "url": "https://github.com/monarch-initiative/mondo/pull/9891"
+}
