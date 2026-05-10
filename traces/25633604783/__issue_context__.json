@@ -1,0 +1,74 @@
+{
+  "body": "**Mondo term (ID Label)**\nMONDO:0021227, adrenal gland neoplasm\n\n**Bug/Typo/Error description**\nI believe there is an error in the equivalencies files. The `ONTOTREE:ADRENAL_GLAND` xref has the IRI `http://purl.obolibrary.org/obo/ADRENAL_GLAND` in the equivalencies file instead of `http://oncotree.mskcc.org/api/tumorTypes/search/code/ADRENAL_GLAND`. On OLS4 the xref on the corresponding Mondo term appears to be correct.\n\nI'm guessing there's an automated pipeline for creating these equivalencies from xrefs and it doesn't properly handle underscores for mskcc IRIs. As far as I can tell, this is the only case like this.\n\nResults of `grep -E \"^id:\" equivalencies.obo | sed -E 's/id: ([^:]+).*/\\1/' | sort | uniq -c`: \n```\n 1 ADRENAL\n 49 DECIPHER\n6042 DOID\n11493 http\n 954 ICD10CM\n 116 ICD10WHO\n 760 ICD9\n  1 ICD9CM\n11371 MEDGEN\n5081 MESH\n14190 MONDO\n```\n_(the http group are all to UMLS and oncotree)_\n\n**Your nano-attribution (ORCID)**\nhttps://orcid.org/0000-0002-0593-3569",
+  "comments": [
+    {
+      "id": "IC_kwDOBjach87ivQSQ",
+      "author": {
+        "login": "matentzn"
+      },
+      "authorAssociation": "MEMBER",
+      "body": "@allenbaron thanks a ton for the report.\n\n@sabrinatoro I would like to obsolete the equivalence.obo file at least, and ideally also the equivalence.owl file. There is NO point using these nowadays over the mondo.sssom.tsv file. Here is how I want to deal with this:\n\n1. officially obsolete equivalence release artefacts (equivalencies.json, equivalencies.owl, equivalencies.obo)\n2. introduce sssom outputs (mondo.sssom.tsv, mondo.sssom.json, mondo.sssom.owl - no OBO)\n\nThis change should be announced in the next Mondo release email. ",
+      "createdAt": "2026-01-27T09:17:09Z",
+      "includesCreatedEdit": false,
+      "isMinimized": false,
+      "minimizedReason": "",
+      "reactionGroups": [],
+      "url": "https://github.com/monarch-initiative/mondo/issues/9889#issuecomment-3804038288",
+      "viewerDidAuthor": false
+    },
+    {
+      "id": "IC_kwDOBjach87i3VGz",
+      "author": {
+        "login": "sabrinatoro"
+      },
+      "authorAssociation": "MEMBER",
+      "body": "Thank you @matentzn. \nI thought we had already obsolete the \"equivalencies\" files in favor of sssom files. I'll follow up on that.",
+      "createdAt": "2026-01-27T16:24:09Z",
+      "includesCreatedEdit": false,
+      "isMinimized": false,
+      "minimizedReason": "",
+      "reactionGroups": [],
+      "url": "https://github.com/monarch-initiative/mondo/issues/9889#issuecomment-3806155187",
+      "viewerDidAuthor": false
+    },
+    {
+      "id": "IC_kwDOBjach87i3ieA",
+      "author": {
+        "login": "matentzn"
+      },
+      "authorAssociation": "MEMBER",
+      "body": "no we had removed the mondo-with-equivalents files - not the `equivalencies` stand alone files!",
+      "createdAt": "2026-01-27T16:34:38Z",
+      "includesCreatedEdit": false,
+      "isMinimized": false,
+      "minimizedReason": "",
+      "reactionGroups": [
+        {
+          "content": "THUMBS_UP",
+          "users": {
+            "totalCount": 1
+          }
+        }
+      ],
+      "url": "https://github.com/monarch-initiative/mondo/issues/9889#issuecomment-3806209920",
+      "viewerDidAuthor": false
+    },
+    {
+      "id": "IC_kwDOBjach8756Hh3",
+      "author": {
+        "login": "matentzn"
+      },
+      "authorAssociation": "MEMBER",
+      "body": "The equivalencies files havebeen deprecated since:\n\nhttps://github.com/monarch-initiative/mondo/releases/tag/v2026-03-03",
+      "createdAt": "2026-04-06T14:23:08Z",
+      "includesCreatedEdit": false,
+      "isMinimized": false,
+      "minimizedReason": "",
+      "reactionGroups": [],
+      "url": "https://github.com/monarch-initiative/mondo/issues/9889#issuecomment-4192761975",
+      "viewerDidAuthor": false
+    }
+  ],
+  "title": "Error in mkscc ADRENAL_GLAND IRI in equivalencies file(s)",
+  "url": "https://github.com/monarch-initiative/mondo/issues/9889"
+}
