@@ -4,7 +4,7 @@ ontology: mondo/imports/equivalencies
 property_value: terms:license "https://creativecommons.org/publicdomain/zero/1.0/" xsd:string
 
 [Term]
-id: ADRENAL:GLAND
+id: http://oncotree.mskcc.org/api/tumorTypes/search/code/ADRENAL_GLAND
 equivalent_to: MONDO:0021227
 
 [Term]
