@@ -1,0 +1,22 @@
+{
+  "body": "I see that MONDO lists two synonyms: Lymphocytic Hypophysitis and autoimmune hypophysitis.\n\nHowever, primary hipophysitis is a parent term for these conditions (Lymphocytic Hypophysitis is considered a synonym as autoimmune hypophysitis and it is is the most common histopathological subtype of primary hypophysitis).\n\nSee: https://journals.lww.com/neur/fulltext/2018/66020/diagnosis_and_management_of_lymphocytic.23.aspx and https://www.ncbi.nlm.nih.gov/books/NBK562255/ \n\nNote:  I am also writing a ticket to Orphanet for clarification. \n\nThank you,\n\nGioconda Alyea",
+  "comments": [
+    {
+      "id": "IC_kwDOBjach87diFL5",
+      "author": {
+        "login": "galyea123"
+      },
+      "authorAssociation": "COLLABORATOR",
+      "body": "Adding to it: Primary hypophysitis is categorized using both histopathologic and anatomical criteria, though the anatomical subclassification applies specifically to lymphocytic hypophysitis rather than to all histologic types. Histopathologic classification divides primary hypophysitis into lymphocytic, granulomatous, xanthomatous, IgG4-related, and necrotizing types. Mixed forms (such as lymphogranulomatous or xanthogranulomatous) are also recognized. As commented above, lymphocytic hypophysitis is the most common histologic variant.\n\nAnatomical classification further subdivides lymphocytic hypophysitis based on the affected region into three types: lymphocytic adenohypophysitis (LAH, affecting the anterior pituitary), lymphocytic infundibuloneurohypophysitis (LINH, affecting the posterior pituitary and stalk), and lymphocytic panhypophysitis (LPH, affecting both anterior and posterior regions). The other histologic variants (granulomatous, xanthomatous, IgG4-related, necrotizing) can also affect different anatomical regions of the pituitary, but they are not routinely subclassified anatomically in the same systematic way as lymphocytic hypophysitis.",
+      "createdAt": "2026-01-06T23:17:24Z",
+      "includesCreatedEdit": false,
+      "isMinimized": false,
+      "minimizedReason": "",
+      "reactionGroups": [],
+      "url": "https://github.com/monarch-initiative/mondo/issues/9859#issuecomment-3716698873",
+      "viewerDidAuthor": false
+    }
+  ],
+  "title": "primary hypophysitis synonyms",
+  "url": "https://github.com/monarch-initiative/mondo/issues/9859"
+}
