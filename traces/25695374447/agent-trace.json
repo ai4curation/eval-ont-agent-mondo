@@ -1,0 +1,7 @@
+Performing one time database migration, may take a few minutes...
+sqlite-migration:done
+Database migration complete.
+{"type":"step_start","timestamp":1778534883842,"sessionID":"ses_1e70fb297ffe7R1tkc9BpXxsuJ","part":{"id":"prt_e18f0a200001XHefbSEuKeV6nL","messageID":"msg_e18f04e380013bdEg2zxy14P84","sessionID":"ses_1e70fb297ffe7R1tkc9BpXxsuJ","snapshot":"ef7379e44cafd29b6ae1a94007c1468ac3d77528","type":"step-start"}}
+[93m[1m! [0mpermission requested: external_directory (/__home/runner/work/eval-ont-agent-mondo/eval-ont-agent-mondo/*); auto-rejecting
+{"type":"tool_use","timestamp":1778534889079,"sessionID":"ses_1e70fb297ffe7R1tkc9BpXxsuJ","part":{"type":"tool","tool":"read","callID":"chatcmpl-tool-aa5f5d3fdb821bd2","state":{"status":"error","input":{"filePath":"/__home/runner/work/eval-ont-agent-mondo/eval-ont-agent-mondo/__issue_context__.json"},"error":"The user rejected permission to use this specific tool call.","time":{"start":1778534889066,"end":1778534889077}},"id":"prt_e18f0abdc0011fNIQnPvuFLNmC","sessionID":"ses_1e70fb297ffe7R1tkc9BpXxsuJ","messageID":"msg_e18f04e380013bdEg2zxy14P84"}}
+{"type":"step_finish","timestamp":1778534889983,"sessionID":"ses_1e70fb297ffe7R1tkc9BpXxsuJ","part":{"id":"prt_e18f0b9fc0014CTE8Fg112vMSJ","reason":"tool-calls","snapshot":"ef7379e44cafd29b6ae1a94007c1468ac3d77528","messageID":"msg_e18f04e380013bdEg2zxy14P84","sessionID":"ses_1e70fb297ffe7R1tkc9BpXxsuJ","type":"step-finish","tokens":{"total":20577,"input":20498,"output":79,"reasoning":0,"cache":{"write":0,"read":0}},"cost":0.0041391}}
