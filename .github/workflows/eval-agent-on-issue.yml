@@ -516,6 +516,8 @@ jobs:
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          TOGETHER_API_KEY: ${{ secrets.TOGETHER_API_KEY }}
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
         run: |
           export PATH="$HOME/.opencode/bin:$PATH"
           opencode run "$(cat __agent_prompt__.md)" \
@@ -544,6 +546,8 @@ jobs:
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          TOGETHER_API_KEY: ${{ secrets.TOGETHER_API_KEY }}
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
         run: |
           # Parse provider/model from inputs.model (e.g. "openai/gpt-5.4" -> provider=openai model=gpt-5.4)
           FULL_MODEL="${{ inputs.model }}"
@@ -751,8 +755,9 @@ jobs:
             fi
           }
 
-          # Extract PR number from URL
-          CREATED_PR_NUMBER=$(echo "$PR_URL" | grep -oE '[0-9]+$')
+          # Extract PR number from URL (handle multi-line output from gh pr create)
+          PR_URL=$(echo "$PR_URL" | grep -o 'https://[^ ]*' | tail -1 | tr -d '\n\r')
+          CREATED_PR_NUMBER=$(echo "$PR_URL" | grep -oE '[0-9]+$' | tr -d '\n\r')
           echo "created_pr_url=${PR_URL}" >> $GITHUB_OUTPUT
           echo "created_pr_number=${CREATED_PR_NUMBER}" >> $GITHUB_OUTPUT
           echo "Created PR #${CREATED_PR_NUMBER}: ${PR_URL}"
