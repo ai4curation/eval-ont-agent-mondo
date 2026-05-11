@@ -1,12 +1,3 @@
-# Mondo code owners (Guardians of the main branch)
-
-# Removed @cmungall to stop him being added to all PRs
-# *       @sabrinatoro
-*.sparql @ptgolden @matentzn
-*.py	  @ptgolden @matentzn
-*.md    @sabrinatoro @nicolevasilevsky
-Makefile @matentzn @ptgolden
-mondo.Makefile @matentzn @ptgolden
-
-docs/*  action@github.com 
-docs/*  actions-user
+# Shadow eval repo — all review requests go to the bot account only
+# See: https://github.com/ai4curation/ai4c-scribe/issues/8
+* @dragon-ai-agent
