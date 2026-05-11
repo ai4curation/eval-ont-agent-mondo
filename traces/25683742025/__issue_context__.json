@@ -1,0 +1,44 @@
+{
+  "body": "This request comes from the ClinGen Hereditary Cardiovascular Disease Gene Curation Expert Panel (GCEP): https://www.clinicalgenome.org/affiliation/40104/ \n\nWe are lumping several cardiac phenotypes associated with SCN5A into one new term. Below we provide the information for the updates and reorganization of the terms. \n\n1. New Mondo term: SCN5A-related cardiac rhythm disorder\n\nParent terms for the new term to reside under:\ncardiogenetic disease (MONDO:0100547)\ncardiac rhythm disease MONDO:0007263\nNew proposed Parent term: cardiogenetic rhythm disorders (Details provided below)\n\nPhenotypes (Child terms) INCLUDED under the new term include: \nAtrial fibrillation, familial, 10 MIM: 614022 (MONDO:0013530)\nSick sinus syndrome 1 MIM: 608567 (MONDO:0024562)\nVentricular fibrillation, familial, 1 MIM: 603829 (MONDO:0011376)\nLong QT syndrome 3 MIM: 603830 (MONDO:0011377)\nBrugada syndrome 1 MIM: 601144 (MONDO:0011001)\n\nPhenotypes EXCLUDED but still associated with SCN5A: \n{Sudden infant death syndrome, susceptibility to} MIM: 272120\nHeart block, nonprogressive MIM: 113900\nHeart block, progressive, type IA MIM: 113900\nCardiomyopathy, dilated, 1E MIM: 601154\n\n\nNew term description for SCN5A-related cardiac rhythm disorder:\n\nA heterogeneous collection of cardiac rhythm disorders caused by genetic variation in the SCN5A gene with autosomal dominant inheritance. Affected individuals are commonly reported to have unremarkable cardiac morphology and at least one cardiac rhythm phenotype that includes, but is not limited to, atrial fibrillation, sick sinus syndrome, progressive cardiac conduction disease, ventricular fibrillation, long QT syndrome, Brugada syndrome, and multifocal ectopic Purkinje-related premature contractions. Individuals with pathogenic variants in SCN5A may also exhibit overlapping or mixed cardiac rhythm phenotypes and intrafamilial variability.\n\n\n\n2. New proposed Parent term: cardiogenetic rhythm disorders\n\nCardiogenetic rhythm disorders new term information:\n\nParent term for cardiogenetic rhythm disorders to reside under: cardiogenetic disease (MONDO:0100547)\n\nChild terms of cardiogenetic rhythm disorders: \natrial conduction disease (MONDO:0014500)\natrioventricular block (MONDO:0000465)\nBrugada syndrome (MONDO:0015263)\nfamilial atrial fibrillation (MONDO:0018054)\nfamilial sick sinus syndrome (MONDO:0012061)\nprogressive familial heart block (MONDO:0019490)\nshort QT syndrome (MONDO:0000453)\nventricular tachycardia, familial (MONDO:0008648)\nventricular fibrillation, familial (MONDO:0011376)\n\nDisease description: A heterogeneous group of cardiac rhythm phenotypes with a monogenic etiology that include, but are not limited to, atrial fibrillation, sick sinus syndrome, progressive cardiac conduction disease, ventricular fibrillation, Brugada syndrome, long QT syndrome, short QT syndrome, and multifocal ectopic Purkinje-related premature contractions, tachycardia with fibrillation, etc. \n\n",
+  "comments": [
+    {
+      "id": "IC_kwDOBjach87PBfr_",
+      "author": {
+        "login": "LengUNC"
+      },
+      "authorAssociation": "NONE",
+      "body": "I apologize for the inconvenience. Please remove \"multifocal ectopic Purkinje-related premature contractions\" from the terms definitions as we are still evaluating the gene-disease association. Please use the revised definitions as below.\n\nNew term description for SCN5A-related cardiac rhythm disorder:\nA heterogeneous collection of cardiac rhythm disorders caused by genetic variation in the SCN5A gene with autosomal dominant inheritance. Affected individuals are commonly reported to have unremarkable cardiac morphology and at least one cardiac rhythm phenotype that includes, but is not limited to, atrial fibrillation, sick sinus syndrome, progressive cardiac conduction disease, ventricular fibrillation, long QT syndrome, and Brugada syndrome. Individuals with pathogenic variants in SCN5A may also exhibit overlapping or mixed cardiac rhythm phenotypes and intrafamilial variability.\n\nNew term description for Cardiogenetic rhythm disorders: \nA heterogeneous group of cardiac rhythm phenotypes with a monogenic etiology that include, but are not limited to, atrial fibrillation, sick sinus syndrome, progressive cardiac conduction disease, ventricular fibrillation, Brugada syndrome, long QT syndrome, short QT syndrome, tachycardia with fibrillation, etc.",
+      "createdAt": "2025-10-31T14:12:09Z",
+      "includesCreatedEdit": false,
+      "isMinimized": false,
+      "minimizedReason": "",
+      "reactionGroups": [
+        {
+          "content": "THUMBS_UP",
+          "users": {
+            "totalCount": 1
+          }
+        }
+      ],
+      "url": "https://github.com/monarch-initiative/mondo/issues/9707#issuecomment-3473275647",
+      "viewerDidAuthor": false
+    },
+    {
+      "id": "IC_kwDOBjach87RwEOk",
+      "author": {
+        "login": "katiermullen"
+      },
+      "authorAssociation": "MEMBER",
+      "body": "@LengUNC - thank you for this request! I have added the two new terms with the definitions that you provided. \n\nFor the children of 'cardiogenetic rhythm disorder' I was able to include all of the terms that you requested EXCEPT atrioventricular block (MONDO:0000465) because this condition does not necessarily have a monogenic etiology. \n\nPlease let me know if you require an additional new term that is specifically 'monogenic atrioventricular block'. If so, please kindly provide a source such as PMID or clin gen working group.\n\nThank you! ",
+      "createdAt": "2025-11-11T22:54:59Z",
+      "includesCreatedEdit": false,
+      "isMinimized": false,
+      "minimizedReason": "",
+      "reactionGroups": [],
+      "url": "https://github.com/monarch-initiative/mondo/issues/9707#issuecomment-3519038372",
+      "viewerDidAuthor": false
+    }
+  ],
+  "title": "Mondo request for SCN5A disease entity for ClinGen",
+  "url": "https://github.com/monarch-initiative/mondo/issues/9707"
+}
