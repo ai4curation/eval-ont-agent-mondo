@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: "⚠️ This is an evaluation shadow repo — do not file issues here"
+    url: https://github.com/monarch-initiative/mondo/issues
+    about: "This repo is used for AI agent evaluation only. File issues on the source repo instead."
+  - name: "About this evaluation framework"
+    url: https://github.com/ai4curation/ai4c-scribe
+    about: "Learn about the AI agent evaluation framework that uses this repo."
