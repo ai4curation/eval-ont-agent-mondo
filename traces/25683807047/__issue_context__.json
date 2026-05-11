@@ -1,0 +1,6 @@
+{
+  "body": "TSEN2-related neurodevelopmental disorder with or without thrombotic microangiopathy\n\n*Parent term: MONDO:0700092 (Neurodevelopmental disorder)\n\nDefinition: This condition is associated with intellectual disability; growth delay; hypotonia; motor delay; ataxia; vision issues; cardiac features (including left ventricular hypertrophy); and pulmonary complications (such as acute respiratory distress and edema). It is also linked to brain structural anomalies such as pontine and cerebellar hypoplasia; cortical atrophy; and dilated ventricles. Renal features include proteinuria, thrombotic microangiopathy, end-stage kidney disease, and high-severity hypertension. \n\n**Definition source: PMIDs: 18711368, 20952379, 23562994, 32404165, 38347586, 38438125, and 38622473\n\n**Children terms: N/A\n\n**URL: https://clinicalgenome.org/affiliation/40069/\n\n",
+  "comments": [],
+  "title": "New Term Request/TSEN2-related neurodevelopmental disorder with or without thrombotic microangiopathy",
+  "url": "https://github.com/monarch-initiative/mondo/issues/9956"
+}
