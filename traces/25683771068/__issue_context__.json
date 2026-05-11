@@ -1,0 +1,67 @@
+{
+  "body": "**Preferred gene-related syndrome label**\nHyperinsulinemic hypoglycemia, familial 3\n\n**Synonyms**\nGCK-related hyperinsulinism\n\n**Parent term (use [OLS](https://www.ebi.ac.uk/ols/ontologies/mondo), or your favorite ontology browser)**\nhttps://www.ebi.ac.uk/ols4/ontologies/mondo/classes/http%253A%252F%252Fpurl.obolibrary.org%252Fobo%252FMONDO_0017182 MONDO:0017182 familial hyperinsulinism\n\n**Definition**\nFamilial hyperinsulinemic hypoglycemia 3 (FHH3) is an autosomal dominant form of congenital hyperinsulinism due to gain-of-function mutations in glucokinase (GCK), which lower the glucose threshold for insulin secretion. \n\n\n**Definition source (Please give PubMed ID, if applicable, in format PMID:#######)\nPMIDs: 15277402, 34680961,24890200\n\n**Children terms (if applicable)** Should any existing terms be re-classified as children underneath this new proposed term? \nN/A\n\n**Your nano-attribution (ORCID) or URL for a working group**\n(https://clinicalgenome.org/affiliation/40016/)\n\n",
+  "comments": [
+    {
+      "id": "IC_kwDOBjach872DAJL",
+      "author": {
+        "login": "elmacke"
+      },
+      "authorAssociation": "NONE",
+      "body": "Hello, our GCEP is wondering when this request might be completed?",
+      "createdAt": "2026-03-25T16:25:37Z",
+      "includesCreatedEdit": false,
+      "isMinimized": false,
+      "minimizedReason": "",
+      "reactionGroups": [],
+      "url": "https://github.com/monarch-initiative/mondo/issues/9861#issuecomment-4127982155",
+      "viewerDidAuthor": false
+    },
+    {
+      "id": "IC_kwDOBjach873vaac",
+      "author": {
+        "login": "MeeSiing"
+      },
+      "authorAssociation": "MEMBER",
+      "body": "@elmacke, thank you for submitting the ticket and your patience. \n\nThere is an existing Mondo term MONDO:0011236 'hyperinsulinemic hypoglycemia due to glucokinase deficiency' that has the same concept and gene association as the request term. Based on OMIM's update and your request, MONDO:0011236 has been updated to be 'hyperinsulinemic hypoglycemia, familial, 3'. 'GCK-related hyperinsulinism' has been added as synonym.\n\nA PR has been created for the changes and it will be reviewed soon. \n\nThanks.\n\n",
+      "createdAt": "2026-03-30T16:29:02Z",
+      "includesCreatedEdit": false,
+      "isMinimized": false,
+      "minimizedReason": "",
+      "reactionGroups": [],
+      "url": "https://github.com/monarch-initiative/mondo/issues/9861#issuecomment-4156401308",
+      "viewerDidAuthor": false
+    },
+    {
+      "id": "IC_kwDOBjach873zOL8",
+      "author": {
+        "login": "MeeSiing"
+      },
+      "authorAssociation": "MEMBER",
+      "body": "@elmacke, the PR is been reviewed and we need some additional information. \n\nCan you please take a look at https://omim.org/entry/602485 and confirm if this term has exactly the same concept as the request term, or are you looking for a more specific term to associate with 'gain-of-function mutations' mentioned in the definition?\n\nThanks. ",
+      "createdAt": "2026-03-30T18:56:11Z",
+      "includesCreatedEdit": false,
+      "isMinimized": false,
+      "minimizedReason": "",
+      "reactionGroups": [],
+      "url": "https://github.com/monarch-initiative/mondo/issues/9861#issuecomment-4157399804",
+      "viewerDidAuthor": false
+    },
+    {
+      "id": "IC_kwDOBjach874m7Fd",
+      "author": {
+        "login": "tpollin"
+      },
+      "authorAssociation": "NONE",
+      "body": "@elmacke  @MeeSiing  this is the same concept but we would prefer the term GCK-related hyperinsulinism as the primary term in keeping with updated recommended nomenclature (Toni Pollin, Co-Chair, ClinGen Monogenic Diabetes Gene Curation Expert Panel)",
+      "createdAt": "2026-04-01T15:35:58Z",
+      "includesCreatedEdit": true,
+      "isMinimized": false,
+      "minimizedReason": "",
+      "reactionGroups": [],
+      "url": "https://github.com/monarch-initiative/mondo/issues/9861#issuecomment-4170953053",
+      "viewerDidAuthor": false
+    }
+  ],
+  "title": "[NTR/gene]",
+  "url": "https://github.com/monarch-initiative/mondo/issues/9861"
+}
