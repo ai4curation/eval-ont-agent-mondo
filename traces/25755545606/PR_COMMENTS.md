@@ -1,0 +1,79 @@
+# Update MONDO:0011236 to GCK-related hyperinsulinism (ClinGen #9861)
+
+## Summary
+
+This pull request updates existing MONDO term **MONDO:0011236** (*hyperinsulinism due to glucokinase deficiency*) to reflect updated ClinGen Monogenic Diabetes Gene Curation Expert Panel nomenclature and mechanistic understanding. Rather than creating a new term, the existing term was renamed and enriched because it already captured the same OMIM concept (OMIM:602485).
+
+---
+
+## Changes made to MONDO:0011236
+
+### 1. Primary name updated
+- **Old:** `hyperinsulinism due to glucokinase deficiency`
+- **New:** `GCK-related hyperinsulinism`
+
+**Rationale:** The previous name incorrectly implied a *loss-of-function* / deficiency mechanism, whereas the condition is caused by activating / gain-of-function mutations in *GCK*. The ClinGen Expert Panel (Co-Chair Toni Pollin) explicitly requested adoption of the gene-related naming convention in this repo’s issue thread.
+
+### 2. Definition updated
+- **New definition:** "Any hyperinsulinism in which the cause of the disease is a gain-of-function variation in the GCK gene, which lowers the glucose threshold for insulin secretion. This condition is characterized by an autosomal dominant form of congenital hyperinsulinism with recurrent episodes of profound hypoglycemia."
+- **Sources:** `https://clinicalgenome.org/affiliation/40016/`, `PMID:15277402`, `PMID:24890200`, `PMID:34680961`
+
+**Rationale:** Replaced the old Orphanet-based definition with a description grounded in the ClinGen-requested literature and consistent with the MONDO `disease_series_by_gene` pattern ("Any [disease] in which the cause of the disease is a variation in the [gene] gene..."). The PMIDs were validated to confirm they specifically describe activating GCK mutations causing hyperinsulinemic hypoglycemia across neonatal, familial, and adult-onset presentations.
+
+### 3. Synonyms updated / added
+- Added **"GCK-related hyperinsulinism"** `EXACT` with `OMO:0002001` ClinGen preferred-label qualifier and ClinGen affiliation URL as source.
+- Added **"hyperinsulinemic hypoglycemia, familial 3"** `EXACT` with `OMIM:602485` source (reflects the originally requested ClinGen preferred label).
+- Promoted **"hyperinsulinemic hypoglycemia familial 3"** and **"hyperinsulinemic hypoglycemia, familial, 3"** from `RELATED` to `EXACT`.
+- Retained **"hyperinsulinism due to glucokinase deficiency"** as `RELATED` synonym with `Orphanet:79299` provenance to preserve historical labels.
+
+**Rationale:** The term must be findable under both the new gene-related name and the traditional OMIM-style familial name. Using the ClinGen `OMO:0002001` annotation clearly marks the community-preferred label.
+
+### 4. Parent term added
+- Added `is_a: MONDO:0017182 {source="OMIM:602485"} ! familial hyperinsulinism`
+
+**Rationale:** The original ClinGen request explicitly listed MONDO:0017182 as the requested parent term. Existing parents (`hyperinsulinemic hypoglycemia`, `diazoxide-sensitive diffuse hyperinsulinism`, `disorder of glycolysis`) were **not removed**, in accordance with MONDO curation guidelines.
+
+### 5. Logical definition (intersection_of) added
+- `intersection_of: MONDO:0017182 ! familial hyperinsulinism`
+- `intersection_of: has_material_basis_in_germline_mutation_in http://identifiers.org/hgnc/4195 ! GCK`
+
+**Rationale:** This adds the standard `disease_series_by_gene` logical definition that was previously missing, enabling automated reasoning. The HGNC identifier **4195** for GCK was explicitly verified against the HGNC REST API.
+
+### 6. Relationship source expanded
+- `relationship: has_material_basis_in_germline_mutation_in http://identifiers.org/hgnc/4195` now includes PMIDs `15277402`, `24890200`, `34680961` alongside `OMIM:602485`.
+
+### 7. Term tracker item added
+- `property_value: IAO:0000233 "https://github.com/monarch-initiative/mondo/issues/9861" xsd:anyURI`
+
+---
+
+## Validation / Research performed
+
+| Step | Status |
+|------|--------|
+| Checked out existing term MONDO:0011236 from `mondo-edit.obo` | ✅ |
+| Validated all three PMIDs (15277402, 24890200, 34680961) via PubMed — confirmed they describe GCK gain-of-function mutations causing hyperinsulinism | ✅ |
+| Verified HGNC identifier for GCK (`http://identifiers.org/hgnc/4195`) against HGNC REST API | ✅ |
+| Reviewed `disease_series_by_gene` pattern in `src/patterns/dosdp-patterns/disease_series_by_gene.yaml` | ✅ |
+| Checked existing comparable term (MONDO:0009734 / ABCC8-related familial hyperinsulinism) for synonym and ClinGen-label patterns | ✅ |
+| Checked in term, ran `make NORM`, and re-ingested normalized file | ✅ |
+| Ran `robot convert` for syntax validation — **no errors** | ✅ |
+| Confirmed `property_value` for original issue (#4985) retained while adding new term tracker for #9861 | ✅ |
+
+---
+
+## Files changed
+
+- `src/ontology/mondo-edit.obo` (only)
+
+---
+
+Closes / addresses https://github.com/monarch-initiative/mondo/issues/9861
+
+---
+🤖 **Generated by opencode agent**
+- Runtime: `opencode`
+- Model: `togetherai/moonshotai/Kimi-K2.6`
+- Agent config: `ai4curation/mondo-agent-config@v3:.`
+- Iteration: `1`
+- Run: [View workflow run](https://github.com/ai4curation/eval-ont-agent-mondo/actions/runs/25755545606)
