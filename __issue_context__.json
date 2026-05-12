@@ -1,0 +1,6 @@
+{
+  "body": "**Mondo term (ID and Label)**\nMONDO:0008549 thoracic dysostosis, isolated\n\n**Reason for deprecation**\nOMIM merged:  187750 MOVED TO 621260\nhttps://www.omim.org/entry/187750 \n\n**Term to be merged with**\nMONDO:0979242 short-rib thoracic dysplasia 22 without polydactyly\n\n**Your nano-attribution (ORCID)**\nIf you don't have an ORCID, you can sign up for one [here](https://orcid.org/)\n",
+  "comments": [],
+  "title": "[Merge]short-rib thoracic dysplasia 22 without polydactyly &  thoracic dysostosis, isolated",
+  "url": "https://github.com/monarch-initiative/mondo/issues/9826"
+}
