@@ -1,0 +1,44 @@
+{
+  "body": "**Preferred gene-related syndrome label**\nRNU12 - related minor spliceopathy disorder\n\n**Synonyms**\ncraniosynostosis-anal anomalies-porokeratosis syndrome MONDO:0011287\nCDAGS syndrome\nspinocerebellar ataxia, autosomal recessive 33 MONDO:0859360 \n\n**Parent term (use [OLS](https://www.ebi.ac.uk/ols/ontologies/mondo), or your favorite ontology browser)**\nhereditary disease, syndromic disease\n\n**Definition**\nAbnormal splicing of pre-mRNA caused by variants in the RNU12 gene. This term captures the disease spectrum. The term includes craniosynostosis-anal anomalies-porokeratosis, also known as CDAGS syndrome, and spinocerebellar ataxia, autosomal recessive 33.\n\n\n**Definition source (Please give PubMed ID, if applicable, in format PMID:#######)\nPMID: 39802771\n\n**Children terms (if applicable)** Should any existing terms be re-classified as children underneath this new proposed term? \ncraniosynostosis-anal anomalies-porokeratosis syndrome MONDO:0011287\nspinocerebellar ataxia, autosomal recessive 33 MONDO:0859360\n\n**Your nano-attribution (ORCID) or URL for a working group**\nhttps://clinicalgenome.org/affiliation/40060/\n",
+  "comments": [
+    {
+      "id": "IC_kwDOBjach875FUee",
+      "author": {
+        "login": "vgitau"
+      },
+      "authorAssociation": "NONE",
+      "body": "Dear @sabrinatoro, I'm following up regarding the RNU12 request. Please let me know if you have any questions regarding the ClinGen preferred label and/or definition. \n\nBest,\nVanessa ",
+      "createdAt": "2026-04-02T16:08:52Z",
+      "includesCreatedEdit": false,
+      "isMinimized": false,
+      "minimizedReason": "",
+      "reactionGroups": [],
+      "url": "https://github.com/monarch-initiative/mondo/issues/9963#issuecomment-4178921374",
+      "viewerDidAuthor": false
+    },
+    {
+      "id": "IC_kwDOBjach875GUFc",
+      "author": {
+        "login": "sabrinatoro"
+      },
+      "authorAssociation": "MEMBER",
+      "body": "Hi @vgitau. Thank you for checking in. \nWe haven't had a chance to look at this issue yet, but we will absolutely reach out if we have questions. ",
+      "createdAt": "2026-04-02T16:57:31Z",
+      "includesCreatedEdit": false,
+      "isMinimized": false,
+      "minimizedReason": "",
+      "reactionGroups": [
+        {
+          "content": "THUMBS_UP",
+          "users": {
+            "totalCount": 1
+          }
+        }
+      ],
+      "url": "https://github.com/monarch-initiative/mondo/issues/9963#issuecomment-4179181916",
+      "viewerDidAuthor": false
+    }
+  ],
+  "title": "RNU12 - related minor spliceopathy disorder",
+  "url": "https://github.com/monarch-initiative/mondo/issues/9963"
+}
