@@ -1,0 +1,22 @@
+{
+  "body": "Hi!  We have a NORD report about this condition and we are requesting to add the following synonyms: \n\nGRINopathies \n\nGRIN-related Encephalopathy \n\nGRIN-related Neurodevelopmental Disorder \n\nGRIN-related complex neurodevelopmental disorder \n\nReferences\n\nSantos-Gómez A, Miguez-Cabello F, García-Recio A, et al. Disease-associated GRIN protein–truncating variants trigger NMDA receptor loss-of-function. Hum Mol Genet. 2021.\n\nSantos-Gómez A, Miguez-Cabello F, Juliá-Palacios N, et al. Paradigmatic de novo variants recapitulate pathophysiological mechanisms underlying GRIN1-related disorder clinical spectrum. Int J Mol Sci. 2021.\n\nGjerulfsen CE, Krey I, Klöckner C, et al. Spectrum of NMDA receptor variants in neurodevelopmental disorders and epilepsy. Methods Mol Biol. 2024.\n\nBenke TA, Park K, Krey I, et al. Clinical and therapeutic significance of genetic variation in the GRIN gene family encoding NMDARs. Neuropharmacology. 2021.\n\nGRIN database: A unified and manually curated repertoire of GRIN variants\n\nThank you! Gioconda Alyea",
+  "comments": [
+    {
+      "id": "IC_kwDOBjach88AAAABAw9pPw",
+      "author": {
+        "login": "MeeSiing"
+      },
+      "authorAssociation": "MEMBER",
+      "body": "Hi @galyea123, we will be adding all the synonyms requested but would like to confirm if GRINopathies should be GRINpathies or grinpathies as in https://pubmed.ncbi.nlm.nih.gov/34884460/. Thanks",
+      "createdAt": "2026-04-29T18:10:50Z",
+      "includesCreatedEdit": false,
+      "isMinimized": false,
+      "minimizedReason": "",
+      "reactionGroups": [],
+      "url": "https://github.com/monarch-initiative/mondo/issues/9930#issuecomment-4346308927",
+      "viewerDidAuthor": false
+    }
+  ],
+  "title": "Request to add synonyms to: GRIN-related complex neurodevelopmental disorder (MONDO:1060138)",
+  "url": "https://github.com/monarch-initiative/mondo/issues/9930"
+}
