@@ -1,0 +1,22 @@
+{
+  "body": "**Mondo term (ID and Label):**\nMONDO:0957382 multiple mitochondrial dysfunctions syndrome 7 \n\n**Suggested new label:**\nGCSH-related glycine encephalopathy\n\n**Your nano-attribution (ORCID)**\n0000-0002-7437-8060\n\n**_Optional_: Any additional information (like supporting evidence, PubMed ID, etc.)**\nThis is the ClinGen preferred label from the Aminoacidopathy GCEP\n\n",
+  "comments": [
+    {
+      "id": "IC_kwDOBjach88AAAABAwN3lQ",
+      "author": {
+        "login": "MeeSiing"
+      },
+      "authorAssociation": "MEMBER",
+      "body": "Hi @justyneross, thank you for the ticket.\n\nWe need more info before we can proceed because the proposed label creates a scope issue. There is currently a term [MONDO:0011612 'glycine encephalopathy'](https://www.ebi.ac.uk/ols4/ontologies/mondo/classes/http%253A%252F%252Fpurl.obolibrary.org%252Fobo%252FMONDO_0011612), and your term appears to be specific and may fit better as a child under this term.\n\nPlease clarify the concept you intend to represent- a syndrome as MONDO:0957382 or specific to glycine encephalopathy as MONDO:0011612. \n\nThanks. ",
+      "createdAt": "2026-04-29T16:18:03Z",
+      "includesCreatedEdit": true,
+      "isMinimized": false,
+      "minimizedReason": "",
+      "reactionGroups": [],
+      "url": "https://github.com/monarch-initiative/mondo/issues/9896#issuecomment-4345526165",
+      "viewerDidAuthor": false
+    }
+  ],
+  "title": "GCSH-related glycine encephalopathy",
+  "url": "https://github.com/monarch-initiative/mondo/issues/9896"
+}
