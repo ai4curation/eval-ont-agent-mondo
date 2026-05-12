@@ -1,0 +1,89 @@
+{
+  "body": "**Preferred gene-related syndrome label**\nFAS-related autoimmune lymphoproliferative syndrome\n\n**Synonyms**\n\n**Parent term (use [OLS](https://www.ebi.ac.uk/ols/ontologies/mondo), or your favorite ontology browser)**\n\n**Definition**\nA syndrome that results from defective lymphocyte homoestasis, and is caused by variants in the FAS gene. It is characterized by non-malignant lymphoproliferation, autoimmune disease, and lifelong increased risk for both Hodgkin and non-Hodgkin lymphoma.\n\n\n**Definition source (Please give PubMed ID, if applicable, in format PMID:#######)\n\n**Children terms (if applicable)** Should any existing terms be re-classified as children underneath this new proposed term? \n\n**Your nano-attribution (ORCID) or URL for a working group**\nhttps://clinicalgenome.org/affiliation/40157/\nThis is a priority disease name for ClinGen. If this request could please be processed as soon as possible, it would be greatly appreciated.\n\n",
+  "comments": [
+    {
+      "id": "IC_kwDOBjach87lAFAN",
+      "author": {
+        "login": "MeeSiing"
+      },
+      "authorAssociation": "MEMBER",
+      "body": "@keparis, thank you for the request. The new term MONDO:1060194 will be available in the upcoming release. ",
+      "createdAt": "2026-02-03T15:26:59Z",
+      "includesCreatedEdit": false,
+      "isMinimized": false,
+      "minimizedReason": "",
+      "reactionGroups": [],
+      "url": "https://github.com/monarch-initiative/mondo/issues/9749#issuecomment-3842002957",
+      "viewerDidAuthor": false
+    },
+    {
+      "id": "IC_kwDOBjach87nhhlF",
+      "author": {
+        "login": "kanems"
+      },
+      "authorAssociation": "COLLABORATOR",
+      "body": "@keparis I have a question about \"FAS-related autoimmune lymphoproliferative syndrome\" relative to OMIM's entry https://www.omim.org/entry/601859 \nHow is ClinGen classifying this term relative to OMIM's \"Autoimmune lymphoproliferative syndrome, type IA\" concept (which appears to be specific to FAS variants) ? I tried to review https://search.clinicalgenome.org/kb/conditions/MONDO:1060194 but it looks like the webpage is still in process of being updated. Just want to make sure we map the ClinGen concept to the proper record in MedGen. Thanks!",
+      "createdAt": "2026-02-11T13:05:38Z",
+      "includesCreatedEdit": false,
+      "isMinimized": false,
+      "minimizedReason": "",
+      "reactionGroups": [],
+      "url": "https://github.com/monarch-initiative/mondo/issues/9749#issuecomment-3884325189",
+      "viewerDidAuthor": false
+    },
+    {
+      "id": "IC_kwDOBjach876SqrX",
+      "author": {
+        "login": "keparis"
+      },
+      "authorAssociation": "NONE",
+      "body": "Hello,\nAfter discussion with another ClinGen group, our chairs decided \"FAS-related autoimmune lymphoproliferative immune disorder\" would be a more appropriate name for this gene-disease relationship because of the recognition associated with it in the PID community. Is there any way to update the current term to this new term, keeping the same definition and all other associated information the same?\n",
+      "createdAt": "2026-04-07T13:11:01Z",
+      "includesCreatedEdit": false,
+      "isMinimized": false,
+      "minimizedReason": "",
+      "reactionGroups": [],
+      "url": "https://github.com/monarch-initiative/mondo/issues/9749#issuecomment-4199197399",
+      "viewerDidAuthor": false
+    },
+    {
+      "id": "IC_kwDOBjach876T0qX",
+      "author": {
+        "login": "MeeSiing"
+      },
+      "authorAssociation": "MEMBER",
+      "body": "@keparis, we can update the name. Would you like to keep 'FAS-related autoimmune lymphoproliferative syndrome' as an exact synonym?",
+      "createdAt": "2026-04-07T13:56:06Z",
+      "includesCreatedEdit": false,
+      "isMinimized": false,
+      "minimizedReason": "",
+      "reactionGroups": [],
+      "url": "https://github.com/monarch-initiative/mondo/issues/9749#issuecomment-4199500439",
+      "viewerDidAuthor": false
+    },
+    {
+      "id": "IC_kwDOBjach876UPBa",
+      "author": {
+        "login": "keparis"
+      },
+      "authorAssociation": "NONE",
+      "body": "Thank you! I don't think we'll need to keep that original name as an exact synonym.",
+      "createdAt": "2026-04-07T14:12:09Z",
+      "includesCreatedEdit": false,
+      "isMinimized": false,
+      "minimizedReason": "",
+      "reactionGroups": [
+        {
+          "content": "THUMBS_UP",
+          "users": {
+            "totalCount": 1
+          }
+        }
+      ],
+      "url": "https://github.com/monarch-initiative/mondo/issues/9749#issuecomment-4199608410",
+      "viewerDidAuthor": false
+    }
+  ],
+  "title": "FAS-related autoimmune lymphoproliferative syndrome",
+  "url": "https://github.com/monarch-initiative/mondo/issues/9749"
+}
