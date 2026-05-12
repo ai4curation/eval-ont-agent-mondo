@@ -1,0 +1,23 @@
+{
+  "run_id": 25762143039,
+  "repo": "ai4curation/eval-ont-agent-mondo",
+  "workflow": "Evaluate an agent on an issue",
+  "inputs": {
+    "issue_repo": "monarch-initiative/mondo",
+    "issue_number": "5726",
+    "pr_number": "10155",
+    "model": "claude-haiku-4-5-20251001",
+    "agent_config_repo": "ai4curation/mondo-agent-config",
+    "agent_config_tag": "v3",
+    "agent_config_directory": ".",
+    "iter_num": "1",
+    "repo_url_prefix": "https://href.li/?",
+    "create_pr": "true",
+    "force_new_branch": "true"
+  },
+  "branch": "scribe-v1-ai4curation-mondo-agent-config-v3-.-claude-haiku-4-5-20251001-iter1-issue-5726",
+  "created_pr_number": "294",
+  "created_pr_url": "https://github.com/ai4curation/eval-ont-agent-mondo/pull/294",
+  "original_issue_url": "https://github.com/monarch-initiative/mondo/issues/5726",
+  "original_pr_url": "https://github.com/monarch-initiative/mondo/pull/10155"
+}
