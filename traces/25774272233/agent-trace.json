@@ -1,0 +1,53 @@
+I'll help you address issue #9987. Let me start by reading the issue context to understand what needs to be done.
+
+● Read __issue_context__.json
+  └ 6 lines read
+
+Now let me examine the file mentioned in the issue to confirm the problem:
+
+● Read inborn_metabolic_disrupts.yaml
+  │ src/patterns/dosdp-patterns/inborn_metabolic_disrupts.yaml
+  └ 53 lines read
+
+Perfect! I can confirm the issue. Line 46 says "An acquired metabolic disease that is has its basis in the disruption of %s." when it should say "An inherited metabolic disease that has its basis in the disruption of %s."
+
+Two corrections needed:
+1. Change "acquired" to "inherited"
+2. Fix the grammatical error "is has" to "has"
+
+Let me make the fix:
+
+● Edit inborn_metabolic_disrupts.yaml +1 -1
+  └ src/patterns/dosdp-patterns/inborn_metabolic_disrupts.yaml
+
+Now let me verify the fix:
+
+● Read inborn_metabolic_disrupts.yaml
+  │ src/patterns/dosdp-patterns/inborn_metabolic_disrupts.yaml
+  └ L40:54 (14 lines read)
+
+Perfect! The fix is correct. Now let me commit the changes:
+
+● Stage the fixed file (shell)
+  │ cd /__w/eval-ont-agent-mondo/eval-ont-agent-mondo && git add
+  │ src/patterns/dosdp-patterns/inborn_metabolic_disrupts.yaml
+  └ 1 line...
+
+● Commit the fix (shell)
+  │ cd /__w/eval-ont-agent-mondo/eval-ont-agent-mondo && git commit -m "Fix
+  │ copy-paste error in inborn_metabolic_disrupts.yaml definition
+  │
+  │ Changed 'acquired' to 'inherited' and fixed grammar 'is has' to 'has'.
+  │ This pattern is for inborn errors of metabolism (inherited conditions),…
+  └ 8 lines...
+
+Now let me create the required markdown files:
+
+● Create ISSUE_COMMENTS.md +6
+
+● Create PR_COMMENTS.md +22
+
+
+Changes   +29 -1
+Requests  1 Premium (45s)
+Tokens    ↑ 288.1k • ↓ 1.9k • 268.4k (cached)
