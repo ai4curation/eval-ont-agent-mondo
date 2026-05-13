@@ -1,0 +1,6 @@
+{
+  "body": "## Bug\n\nIn `src/patterns/dosdp-patterns/inborn_metabolic_disrupts.yaml`, line 46:\n\n```yaml\ndef:\n  text: An acquired metabolic disease that is has its basis in the disruption of %s.\n```\n\nShould be:\n\n```yaml\ndef:\n  text: An inherited metabolic disease that has its basis in the disruption of %s.\n```\n\nTwo issues:\n1. **\"acquired\" should be \"inherited\"** — this is a pattern for inborn errors of metabolism, not acquired diseases. Appears to be a copy-paste from `acquired.yaml`.\n2. **\"is has\" should be \"has\"** — minor grammar typo.\n\nThe `equivalentTo` clause correctly references `inborn errors of metabolism` (MONDO:0019052), so the logical definition is fine — only the text template is wrong.\n\nFound during analysis of the \"inborn\" classification axis in [#9986](https://github.com/monarch-initiative/mondo/issues/9986).",
+  "comments": [],
+  "title": "Copy-paste error in inborn_metabolic_disrupts.yaml: definition says 'acquired' instead of 'inherited'",
+  "url": "https://github.com/monarch-initiative/mondo/issues/9987"
+}
