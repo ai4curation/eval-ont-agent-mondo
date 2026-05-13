@@ -1,0 +1,22 @@
+{
+  "body": "\n**Description:**\nThis issue provides updates to gene–disease classifications and inheritance patterns for Porphyria disease entities.\nThe proposed modifications were developed by the ClinGen General Inborn Errors of Metabolism Gene Curation Expert Panel (GCEP) and approved by expert consensus.\n\nA manuscript describing these updates is in preparation:\nProvisional title: Updates to Gene–Disease Classifications and Inheritance Patterns for Porphyria Disease Entities\nAuthors: Emily Brown Reeves, William Hankey, Pepper St Clair, Jenny Goldstein, Matheus Wilke, Annette Feigenbaum, Christina Hung, Elaine Spector, William J. Craigen\n\nAttachment:\nSee attached table for details on proposed modifications for the following genes:\n_ALAS2, ALAD, HMBS, UROS, UROD, CPOX, PPOX, FECH_\n\n[MONDO Porphyria GCP.xlsx](https://github.com/user-attachments/files/23218938/MONDO.Porphyria.GCP.xlsx)\n",
+  "comments": [
+    {
+      "id": "IC_kwDOBjach87TmtjW",
+      "author": {
+        "login": "sabrinatoro"
+      },
+      "authorAssociation": "MEMBER",
+      "body": "@mtwilke-art \nI am working on your request, and i have a question about \"UROS-related erythropoietic porphyria\". \nThe suggested definition is \"An erythropoietic porphyria caused by biallelic variants in UROS (in an autosomal recessive inheritance pattern). (...)\". \nWe do not currently have the term \"erythropoietic porphyria\" in Mondo. Is it the same as 'erythropoietic protoporphyria'? If not, could you please share a definition for \"erythropoietic porphyria\" ? Is this a term that we need to create? \n\nThank you! ",
+      "createdAt": "2025-11-19T01:20:20Z",
+      "includesCreatedEdit": false,
+      "isMinimized": false,
+      "minimizedReason": "",
+      "reactionGroups": [],
+      "url": "https://github.com/monarch-initiative/mondo/issues/9703#issuecomment-3550140630",
+      "viewerDidAuthor": false
+    }
+  ],
+  "title": "Updates to Gene-Disease Classifications and Inheritance Patterns for Porphyria Disease Entities - ClinGen EIM group.",
+  "url": "https://github.com/monarch-initiative/mondo/issues/9703"
+}
