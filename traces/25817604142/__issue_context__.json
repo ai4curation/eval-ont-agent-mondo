@@ -1,0 +1,59 @@
+{
+  "body": "This term \"tinea unguium\" refers to a fungal infection of the nails. However, the exact synonyms include infections of various other body parts. These seem to have been added by mistake.\n\nFor example:\ncellulitis and abscess of buttock\ncellulitis and abscess of face\ncellulitis and abscess of gluteal region\ncellulitis and abscess of trunk\ncellulitis and abscess of upper arm and forearm",
+  "comments": [
+    {
+      "id": "IC_kwDOBjach87ykHkW",
+      "author": {
+        "login": "matentzn"
+      },
+      "authorAssociation": "MEMBER",
+      "body": "This will be a tough nut to crack in the big picture. All of these come from DO, and are still in there:\n\nhttps://www.ebi.ac.uk/ols4/ontologies/doid/classes/http%253A%252F%252Fpurl.obolibrary.org%252Fobo%252FDOID_13074\n\n@sabrinatoro what is your take? \n\n1. Fix these 1 by 1\n2. Do something drastic more large scale?\n",
+      "createdAt": "2026-03-16T17:55:07Z",
+      "includesCreatedEdit": false,
+      "isMinimized": false,
+      "minimizedReason": "",
+      "reactionGroups": [],
+      "url": "https://github.com/monarch-initiative/mondo/issues/10030#issuecomment-4069554454",
+      "viewerDidAuthor": false
+    },
+    {
+      "id": "IC_kwDOBjach87ykH64",
+      "author": {
+        "login": "matentzn"
+      },
+      "authorAssociation": "MEMBER",
+      "body": "Thank you @eks-ebi super useful!",
+      "createdAt": "2026-03-16T17:55:20Z",
+      "includesCreatedEdit": false,
+      "isMinimized": false,
+      "minimizedReason": "",
+      "reactionGroups": [
+        {
+          "content": "THUMBS_UP",
+          "users": {
+            "totalCount": 1
+          }
+        }
+      ],
+      "url": "https://github.com/monarch-initiative/mondo/issues/10030#issuecomment-4069555896",
+      "viewerDidAuthor": false
+    },
+    {
+      "id": "IC_kwDOBjach87yk-H2",
+      "author": {
+        "login": "sabrinatoro"
+      },
+      "authorAssociation": "MEMBER",
+      "body": "@matentzn we discussed this in the past (We can follow-up in a meeting)\nWe need a more drastic-large scale approach.",
+      "createdAt": "2026-03-16T18:35:25Z",
+      "includesCreatedEdit": false,
+      "isMinimized": false,
+      "minimizedReason": "",
+      "reactionGroups": [],
+      "url": "https://github.com/monarch-initiative/mondo/issues/10030#issuecomment-4069777910",
+      "viewerDidAuthor": false
+    }
+  ],
+  "title": "Incorrect synonyms for MONDO_0001628",
+  "url": "https://github.com/monarch-initiative/mondo/issues/10030"
+}
