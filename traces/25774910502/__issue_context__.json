@@ -1,0 +1,52 @@
+{
+  "body": "**Mondo term (ID and Label)**\nMONDO:0023124 familial pulmonary arterial hypertension leucopenia and atrial septal defect\n\n**Reason for deprecation**\nThe only \"class info\" or anything resembling an x-ref is a non-existent GARD link- https://rarediseases.info.nih.gov/diseases/10455/familial-pulmonary-arterial-hypertension-leucopenia-and-atrial-septal-defect\n\n**Suggested term to consider**\nNone.\n\n**Your nano-attribution (ORCID)**\nIf you don't have an ORCID, you can sign up for one [here](https://orcid.org/)\n\n",
+  "comments": [
+    {
+      "id": "IC_kwDOBjach874kWaU",
+      "author": {
+        "login": "MeeSiing"
+      },
+      "authorAssociation": "MEMBER",
+      "body": "@kanems, thank you for the ticket. \n\nI am considering to keep MONDO:0023124 and relabel it as Dursun syndrome according to OMIM:612541. This is because familial pulmonary arterial hypertension leucopenia and atrial septal defect is an exact synonym to Dursun syndrome. Dursun syndrome is marked as \"included\" in OMIM which is considered as a related but different disease. Mondo currently has both terms as related synonym to MONDO:0012930 'autosomal recessive severe congenital neutropenia due to G6PC3 deficiency', so it's probably good to keep MONDO:0023124. When it is relabeled, OMIM:612541 and ORPHA:178503 will be added as dbxref. \n\nPlease let me know if you have any concerns. Thanks.",
+      "createdAt": "2026-04-01T13:55:03Z",
+      "includesCreatedEdit": false,
+      "isMinimized": false,
+      "minimizedReason": "",
+      "reactionGroups": [],
+      "url": "https://github.com/monarch-initiative/mondo/issues/9799#issuecomment-4170278548",
+      "viewerDidAuthor": false
+    },
+    {
+      "id": "IC_kwDOBjach874nXPK",
+      "author": {
+        "login": "kanems"
+      },
+      "authorAssociation": "COLLABORATOR",
+      "body": "@MeeSiing I agree with the proposal to rename MONDO:0023124 as Dursen syndrome. X-ref to OMIM 612541 is also appropriate, but it should get looped into the \"OMIM included\" ticket (see https://github.com/monarch-initiative/mondo/issues/5507) and tagging, whenever that can be addressed.\nIf adding ORPHA:178503, will it be flagged as an obsolete ID from Orphanet? I see it is showing in ORDO under \"depracated disorder.\"",
+      "createdAt": "2026-04-01T15:55:10Z",
+      "includesCreatedEdit": false,
+      "isMinimized": false,
+      "minimizedReason": "",
+      "reactionGroups": [],
+      "url": "https://github.com/monarch-initiative/mondo/issues/9799#issuecomment-4171068362",
+      "viewerDidAuthor": false
+    },
+    {
+      "id": "IC_kwDOBjach874qk1t",
+      "author": {
+        "login": "MeeSiing"
+      },
+      "authorAssociation": "MEMBER",
+      "body": "@kanems, you are right. OMIM 612541 will be MONDO:includedEntryInOMIM and ORPHA:178503 will be MONDO:equivalentObsolete in Mondo.",
+      "createdAt": "2026-04-01T17:50:57Z",
+      "includesCreatedEdit": false,
+      "isMinimized": false,
+      "minimizedReason": "",
+      "reactionGroups": [],
+      "url": "https://github.com/monarch-initiative/mondo/issues/9799#issuecomment-4171910509",
+      "viewerDidAuthor": false
+    }
+  ],
+  "title": "[Obsolete]MONDO:0023124 familial pulmonary arterial hypertension leucopenia and atrial septal defect",
+  "url": "https://github.com/monarch-initiative/mondo/issues/9799"
+}
