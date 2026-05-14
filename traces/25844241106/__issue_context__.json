@@ -1,0 +1,22 @@
+{
+  "body": "**Preferred gene-related syndrome label**\nFor example: NAA10-related syndrome\nKY-related neuromyopathy\n\n**Synonyms**\n\n**Parent term (use [OLS](https://www.ebi.ac.uk/ols/ontologies/mondo), or your favorite ontology browser)**\nMONDO:0100546 \"hereditary neuromuscular disease\"\n\n**Definition**\nPlease write the definition in the format: Any [parent class] in which the cause of the disease is a mutation in the [gene name] gene. For example: Any congenital myopathy in which the cause of the disease is a mutation in the TPM3 gene.\nAny neuromyopathy in which the cause of the disease is mutation in the KY gene. \n\n**Definition source (Please give PubMed ID, if applicable, in format PMID:#######)\nThe ClinGen Muscular Dystrophy and Myopathy GCEP considers the below suggested children terms to be part of a spectrum of KY-related neuromyopathy. The group is still evaluating whether the myopathy associated with this gene should be considered myofibrillar myopathy, and so additional requests related to MONDO:0014922 \"myofibrillar myopathy 7\" may be made in the future.\nPMID:27484770, PMID:27485408, PMID:28488683, PMID:32818658\n\n**Children terms (if applicable)** Should any existing terms be re-classified as children underneath this new proposed term? \nMONDO:0014922 \"myofibrillar myopathy 7\"\nMONDO:0044648 \"kyphoscoliosis-lateral tongue atrophy-hereditary spastic paraplegia syndrome\"\nMONDO:0044647 \"kyphosis-lateral tongue atrophy-myofibrillar myopathy syndrome\"\n \n**Your nano-attribution (ORCID) or URL for a working group**\nIf you don't have an ORCID, you can sign up for one [here](https://orcid.org/)\nhttps://clinicalgenome.org/affiliation/40151/\n0000-0002-2078-7280",
+  "comments": [
+    {
+      "id": "IC_kwDOBjach874slyD",
+      "author": {
+        "login": "katiermullen"
+      },
+      "authorAssociation": "MEMBER",
+      "body": "@clauseMDM thank you for this request. The new term, KY-related neuromyopathy, will be available in Mondo at the next release.\n\nThe three terms that you indicate will appear as children of this term. \n\nMONDO:0014922 \"myofibrillar myopathy 7\"\nMONDO:0044648 \"kyphoscoliosis-lateral tongue atrophy-hereditary spastic paraplegia syndrome\"\nMONDO:0044647 \"kyphosis-lateral tongue atrophy-myofibrillar myopathy syndrome\"\n\nPlease let us know if these need to be updated in the future.\n",
+      "createdAt": "2026-04-01T19:21:07Z",
+      "includesCreatedEdit": false,
+      "isMinimized": false,
+      "minimizedReason": "",
+      "reactionGroups": [],
+      "url": "https://github.com/monarch-initiative/mondo/issues/9937#issuecomment-4172438659",
+      "viewerDidAuthor": false
+    }
+  ],
+  "title": "NTR/KY",
+  "url": "https://github.com/monarch-initiative/mondo/issues/9937"
+}
