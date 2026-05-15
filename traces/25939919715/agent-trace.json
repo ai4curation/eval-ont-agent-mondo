@@ -1,0 +1,93 @@
+I'll help you address issue #9938. Let me start by reading the issue context to understand what needs to be done.
+
+● Read __issue_context__.json
+  └ 6 lines read
+
+Now let me search for the existing term MONDO:0012277 to understand its current state:
+
+● Search for MONDO:0012277 (shell)
+  │ obo-grep.pl --noheader -r 'id: MONDO:0012277' src/ontology/mondo-edit.obo
+  └ 37 lines...
+
+Great! I can see the term exists and already has several gene-related synonyms including "LDB3 myofibrillar myopathy" and "ZASP-related myofibrillar myopathy". The request is to change the primary label to "LDB3-related myofibrillar myopathy" to follow ClinGen's preferred naming convention.
+
+Now let me check out this term to edit it:
+
+● Check out MONDO:0012277 for editing (shell)
+  │ obo-checkout.pl src/ontology/mondo-edit.obo MONDO:0012277
+  └ 3 lines...
+
+Now let me view the checked-out file:
+
+● Read MONDO_0012277.obo
+  │ terms/MONDO_0012277.obo
+  └ 36 lines read
+
+Now I'll edit the file to:
+1. Change the name to "LDB3-related myofibrillar myopathy"
+2. Add the old name as a synonym with proper citation
+3. Add the ClinGen source attribution as requested
+
+● Edit MONDO_0012277.obo +1 -1
+  └ terms/MONDO_0012277.obo
+
+Now I need to add the old name as a synonym. Let me add it after the existing synonyms:
+
+● Edit MONDO_0012277.obo +1
+  └ terms/MONDO_0012277.obo
+
+Now I need to add the IAO:0000233 property to link back to the issue, and add the creator property for the curator who requested this change. Let me add it at the end:
+
+● Edit MONDO_0012277.obo +1
+  └ terms/MONDO_0012277.obo
+
+Now let me verify the edited file looks correct:
+
+● Read MONDO_0012277.obo
+  │ terms/MONDO_0012277.obo
+  └ 38 lines read
+
+Perfect! Now let me check this back in:
+
+● Check in MONDO:0012277 changes (shell)
+  │ obo-checkin.pl src/ontology/mondo-edit.obo MONDO:0012277
+  └ 1 line...
+
+Now I need to normalize the ontology as mentioned in the guidelines:
+
+● skill(odk)
+
+Let me get the docker image tag from run.sh and then normalize the ontology:
+
+● Get ODK image tag (shell)
+  │ grep '^IMAGE=' src/ontology/run.sh
+  └ 2 lines...
+
+Now let me run the normalization command using docker directly:
+
+● Normalize mondo-edit.obo (shell)
+  │ docker run --memory=8g \
+  │ -v /home/runner/work/eval-ont-agent-mondo/eval-ont-agent-mondo:/work \
+  │ -w /work/src/ontology \
+  │ -e ROBOT_JAVA_ARGS=-Xmx8G -e JAVA_OPTS=-Xmx8G \
+  │ --rm -i obolibrary/odkfull:v1.6 \…
+  └ 22 lines...
+
+The docker image is being pulled. Let me wait for it to complete and check if the NORM file was created:
+
+● Check if NORM file was created (shell)
+  │ ls -lah src/ontology/NORM 2>&1
+  └ 2 lines...
+
+Great! The NORM file was created successfully. Now let me move it to replace mondo-edit.obo:
+
+● Replace mondo-edit.obo with normalized version (shell)
+  │ mv src/ontology/NORM src/ontology/mondo-edit.obo
+  └ 1 line...
+
+
+You've reached your weekly rate limit. Please wait for your limit to reset on May 18, 2026 at 12:00 AM or switch to auto model to continue. Learn More (https://docs.github.com/copilot/concepts/rate-limits). (Request ID: 64C0:388FB:110B2A9:12A610D:6A078742)
+
+Changes   +3 -1
+Requests  1 Premium (4m 46s)
+Tokens    ↑ 473.3k • ↓ 3.3k • 441.6k (cached)
