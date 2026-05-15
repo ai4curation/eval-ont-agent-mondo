@@ -1,0 +1,22 @@
+{
+  "body": "### Label\n\nPADI6-related oocyte/zygote/embryo maturation arrest 16 and maternal-effect disorder\n\n### Synonyms\n\noocyte/zygote/embryo maturation arrest 16, PREIMPLANTATION EMBRYONIC LETHALITY 2, early embryonic arrest\n\n### Synonym type\n\nexact\n\n### Definition\n\nPADI6-related oocyte/zygote/embryo maturation arrest 16 and maternal-effect disorder is an autosomal recessive female infertility disorder marked by early embryonic arrest  and female infertility. \n\n### Parent term\n\ninherited oocyte maturation defect MONDO0014769\n\n### Children term(s)\n\n_No response_\n\n### ORCID Identifier\n\n_No response_\n\n### Website URL\n\nhttps://clinicalgenome.org/affiliation/40106\n\n### Additional comments\n\n PMC5010645, PMC6018785, PMCID 5010645\n\n",
+  "comments": [
+    {
+      "id": "IC_kwDOBjach874t2_i",
+      "author": {
+        "login": "katiermullen"
+      },
+      "authorAssociation": "MEMBER",
+      "body": "@sng2140 thank you for this request. The new term will appear in the next release of Mondo. ",
+      "createdAt": "2026-04-01T20:26:31Z",
+      "includesCreatedEdit": false,
+      "isMinimized": false,
+      "minimizedReason": "",
+      "reactionGroups": [],
+      "url": "https://github.com/monarch-initiative/mondo/issues/9855#issuecomment-4172771298",
+      "viewerDidAuthor": false
+    }
+  ],
+  "title": "Request for new term PADI6-related oocyte/zygote/embryo maturation arrest 16 and maternal-effect disorder",
+  "url": "https://github.com/monarch-initiative/mondo/issues/9855"
+}
