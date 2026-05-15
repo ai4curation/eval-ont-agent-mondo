@@ -1,0 +1,136 @@
+I'll help you address issue #9859. Let me start by reading the issue context to understand what needs to be done.
+
+● Read __issue_context__.json
+  └ 22 lines read
+
+Let me understand this issue better. The user is pointing out that:
+1. MONDO lists "Lymphocytic Hypophysitis" and "autoimmune hypophysitis" as synonyms
+2. However, primary hypophysitis is a parent term for these conditions
+3. Lymphocytic hypophysitis is the most common histopathological subtype of primary hypophysitis
+
+Let me search for the relevant terms in the ontology.
+
+● Search for hypophysitis terms in the ontology (shell)
+  │ obo-grep.pl --noheader -r 'hypophysitis' src/ontology/mondo-edit.obo | head
+  │ -100
+  └ 101 lines...
+
+Now let me fetch the PMIDs referenced in the issue to better understand the medical context:
+
+● Fetch literature reference 1 (shell)
+  │ curl -s "https://journals.lww.com/neur/fulltext/2018/66020/diagnosis_and_man
+  │ agement_of_lymphocytic.23.aspx" | grep -i
+  │ "lymphocytic\|primary\|hypophysitis" | head -20
+  └ 2 lines...
+
+● Fetch literature reference 2 (shell)
+  │ curl -s "https://www.ncbi.nlm.nih.gov/books/NBK562255/" | grep -i
+  │ "lymphocytic\|primary\|hypophysitis" | head -30
+  └ 6 lines...
+
+Let me check the second reference more carefully:
+
+● Search for key phrases in literature (shell)
+  │ grep -i "lymphocytic.*most
+  │ common\|primary.*histopathological\|histologic.*variant"
+  │ /tmp/copilot-tool-output-1778878120005-f91kev.txt | head -10
+  └ 6 lines...
+
+Perfect! The literature confirms that "lymphocytic hypophysitis is the most frequent" autoimmune condition. Now let me look at the current MONDO term for primary hypophysitis more carefully:
+
+● Get full term for primary hypophysitis (shell)
+  │ obo-grep.pl --noheader -r 'id: MONDO:0019835' src/ontology/mondo-edit.obo
+  └ 28 lines...
+
+Now let me check if there are any other hypophysitis subtypes to understand the complete structure:
+
+● Find all children of primary hypophysitis (shell)
+  │ obo-grep.pl --noheader -r 'is_a: MONDO:0019835' src/ontology/mondo-edit.obo
+  │ | grep -v "^is_a:" | head -40
+  └ 41 lines...
+
+Let me check for granulomatous, xanthomatous, and other histologic types mentioned in the comments:
+
+● Search for other hypophysitis types (shell)
+  │ obo-grep.pl --noheader -r
+  │ '(granulomatous|xanthomatous|IgG4|necrotizing).*hypophysitis'
+  │ src/ontology/mondo-edit.obo | head -30
+  └ 11 lines...
+
+Now I understand the issue better. Based on the medical literature and the user's concern:
+
+1. **Current problem**: MONDO:0019835 (primary hypophysitis) has "lymphocytic hypophysitis" as a synonym, but this is incorrect
+2. **Correct understanding**: 
+   - Primary hypophysitis is a parent/umbrella term that includes multiple histologic types
+   - Lymphocytic hypophysitis is the most common histologic subtype of primary hypophysitis
+   - They are related but not synonymous
+
+The user is correct. The synonym should be removed from the parent term (MONDO:0019835) because:
+- Lymphocytic hypophysitis is a specific histologic subtype, not a synonym for all primary hypophysitis
+- The comment in MONDO:0021156 already notes there are 5 types: lymphocytic, granulomatous, xanthomatous, xanthogranulomatous, and necrotizing
+- "Autoimmune hypophysitis" can remain as a synonym since it describes the immune-mediated nature of the condition
+
+Let me also check if there should be a separate term for lymphocytic hypophysitis as a distinct entity:
+
+● Check for existing lymphocytic hypophysitis term (shell)
+  │ obo-grep.pl --noheader -r 'name: lymphocytic' src/ontology/mondo-edit.obo |
+  │ grep -i hypophysitis
+  └ 1 line...
+
+Now let me look at adenohypophysitis more carefully since it has "lymphocytic adenohypophysitis" as a synonym:
+
+● Get full adenohypophysitis term (shell)
+  │ obo-grep.pl --noheader -r 'id: MONDO:0019838' src/ontology/mondo-edit.obo
+  └ 24 lines...
+
+Now I have a clearer picture. Looking at the structure:
+
+1. **MONDO:0019835 (primary hypophysitis)** - Parent term with two synonyms:
+   - "autoimmune hypophysitis" - CORRECT (describes the immune nature)
+   - "lymphocytic hypophysitis" - INCORRECT (this is a specific subtype, not a synonym for all primary hypophysitis)
+
+2. **MONDO:0019838 (adenohypophysitis)** - Child term with synonym "lymphocytic adenohypophysitis"
+   - This is an anatomical subtype of lymphocytic hypophysitis
+
+3. **MONDO:0023282 (granulomatous hypophysitis)** - Another histologic type, but it's under MONDO:0021156 (hypophysitis) rather than under primary hypophysitis
+
+The issue mentions that according to medical literature:
+- Primary hypophysitis has multiple histologic subtypes: lymphocytic, granulomatous, xanthomatous, IgG4-related, and necrotizing
+- Lymphocytic hypophysitis is the most common histologic subtype
+- Lymphocytic hypophysitis can be further subdivided anatomically into: lymphocytic adenohypophysitis (LAH), lymphocytic infundibuloneurohypophysitis (LINH), and lymphocytic panhypophysitis (LPH)
+
+The fix should be:
+1. Remove "lymphocytic hypophysitis" as a synonym from MONDO:0019835 (primary hypophysitis)
+2. Consider whether granulomatous hypophysitis should be moved under primary hypophysitis
+
+Let me check out the term and make the necessary edits:
+
+● Check out primary hypophysitis term (shell)
+  │ obo-checkout.pl src/ontology/mondo-edit.obo MONDO:0019835
+  └ 3 lines...
+
+● Read MONDO_0019835.obo
+  │ terms/MONDO_0019835.obo
+  └ 27 lines read
+
+Perfect! Now I need to remove the synonym "lymphocytic hypophysitis" from line 12. Let me edit the file:
+
+● Edit MONDO_0019835.obo -1
+  └ terms/MONDO_0019835.obo
+
+Now let me add a comment to document why this was removed and add the issue tracker reference:
+
+● Edit MONDO_0019835.obo +1
+  └ terms/MONDO_0019835.obo
+
+Now let me add the term tracker reference:
+
+● Edit MONDO_0019835.obo +1
+  └ terms/MONDO_0019835.obo
+
+
+You've reached your weekly rate limit. Please wait for your limit to reset on May 18, 2026 at 12:00 AM or switch to auto model to continue. Learn More (https://docs.github.com/copilot/concepts/rate-limits). (Request ID: F420:C525B:FDB59F:1173611:6A07870D)
+
+Changes   +2 -1
+Requests  1 Premium (2m 59s)
+Tokens    ↑ 535.2k • ↓ 4.2k • 505.1k (cached)
