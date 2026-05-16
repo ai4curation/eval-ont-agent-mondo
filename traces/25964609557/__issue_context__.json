@@ -1,0 +1,22 @@
+{
+  "body": "**Mondo term (ID and Label)**\nMONDO:0023243\nglass-chapman-hockley syndrome\n**Reason for deprecation**\nI think the SNOMED CT exact matching concept is retired, based on the data from UMLS and the Orphanet record is obsolete. The SYNS from Snomed CT are similar to another record with an active Orphanet ID, but this paper supports the original merge of Orphanet's \"Craniosynostosis-dysmorphism-brachydactyly syndrome\" (ORPHA:1535) to Muenke : https://pmc.ncbi.nlm.nih.gov/articles/PMC5051481/ \n\n**Suggested term to consider**\nMuenke syndrome MONDO:0011274\n\n**Your nano-attribution (ORCID)**\nIf you don't have an ORCID, you can sign up for one [here](https://orcid.org/)\n\n",
+  "comments": [
+    {
+      "id": "IC_kwDOBjach874PoRv",
+      "author": {
+        "login": "MeeSiing"
+      },
+      "authorAssociation": "MEMBER",
+      "body": "@kanems, thank you for pointing this out. \n\nglass-chapman-hockley syndrome will be obsoleted based on:\n1. PMID:20108486 which mentioned that it is a historical term and is replaced by Muenke syndrome MONDO:0011274. \n2. It is confirmed that the phenotypic features of glass-chapman-hockley syndrome overlap with Muenke syndrome. \n\nPlease reach out if you have any concerns. Thanks. ",
+      "createdAt": "2026-03-31T19:12:36Z",
+      "includesCreatedEdit": false,
+      "isMinimized": false,
+      "minimizedReason": "",
+      "reactionGroups": [],
+      "url": "https://github.com/monarch-initiative/mondo/issues/9798#issuecomment-4164846703",
+      "viewerDidAuthor": false
+    }
+  ],
+  "title": "[Obsolete] glass-chapman-hockley syndrome",
+  "url": "https://github.com/monarch-initiative/mondo/issues/9798"
+}
