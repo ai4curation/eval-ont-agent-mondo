@@ -531,14 +531,16 @@ jobs:
           # ~/.codex/auth.json, and point a custom opencode provider at it.
           case "$MODEL" in
             openai/gpt-*|gpt-5.*)
-              # npx (Node >= 18) is required for the proxy
-              if ! command -v node >/dev/null 2>&1 || [ "$(node -v 2>/dev/null | sed 's/v//;s/\..*//')" -lt 18 ]; then
+              # openai-oauth requires Node >= 20
+              if ! command -v node >/dev/null 2>&1 || [ "$(node -v 2>/dev/null | sed 's/v//;s/\..*//')" -lt 20 ]; then
                 curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
                 export NVM_DIR="$HOME/.nvm"
                 . "$NVM_DIR/nvm.sh"
                 nvm install 22
                 nvm use 22
+                hash -r 2>/dev/null || true
               fi
+              echo "node (post-setup): $(command -v node) $(node -v 2>/dev/null)"
               echo "node: $(command -v node) $(node -v 2>/dev/null)"
               nohup npx -y openai-oauth \
                 --oauth-file "$HOME/.codex/auth.json" \
