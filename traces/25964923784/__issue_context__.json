@@ -1,0 +1,104 @@
+{
+  "body": "This is a self-assigned issue I am opening to add non-human animal diseases from VeNom. \r\n\r\nSee https://venomcoding.org/venom-codes/\r\n\r\nThere are 6,182 rows of diagnosis data with disease/phenotype name, VeNom code, body system classification (if applicable), and group of animal affected (large animal, small animal, farm animal, equine, exotics). \r\n\r\nThis data will need curation as some \"diagnoses\" are actually \"phenotypes\" and should be added to uPheno. \r\n\r\nThe non-human animal diseases will be mapped to human disease analogs as appropriate. ",
+  "comments": [
+    {
+      "id": "IC_kwDOBjach85TUWn4",
+      "author": {
+        "login": "nicolevasilevsky"
+      },
+      "authorAssociation": "MEMBER",
+      "body": "@katiermullen could you assign this to a milestone? (You can always push it back later)",
+      "createdAt": "2023-01-20T02:16:22Z",
+      "includesCreatedEdit": true,
+      "isMinimized": false,
+      "minimizedReason": "",
+      "reactionGroups": [],
+      "url": "https://github.com/monarch-initiative/mondo/issues/5726#issuecomment-1397844472",
+      "viewerDidAuthor": false
+    },
+    {
+      "id": "IC_kwDOBjach872t2c4",
+      "author": {
+        "login": "katiermullen"
+      },
+      "authorAssociation": "MEMBER",
+      "body": "Add venom non-human animal disease x-refs from VeNom_release_h_Feb_2026",
+      "createdAt": "2026-03-27T00:32:08Z",
+      "includesCreatedEdit": false,
+      "isMinimized": false,
+      "minimizedReason": "",
+      "reactionGroups": [],
+      "url": "https://github.com/monarch-initiative/mondo/issues/5726#issuecomment-4139214648",
+      "viewerDidAuthor": false
+    },
+    {
+      "id": "IC_kwDOBjach8726OLV",
+      "author": {
+        "login": "katiermullen"
+      },
+      "authorAssociation": "MEMBER",
+      "body": "## Implementation Plan\n\n### Data source\n- VeNom release h (Feb 2026), TermSubset sheet, Diagnosis subset\n- 5,271 active diagnosis terms after filtering\n- VeNom uses British English spelling; matching applies British-to-American conversion\n- VeNom uses prefix `VeNom` (consistent with VBO), xref source is `MONDO:VeNom`\n\n### Phase 1: Data extraction (complete)\n- Extracted VeNom Diagnosis terms to `data/venom_diagnosis_terms.tsv`\n- Parsed parenthetical content into abbreviations, species qualifiers, and synonyms\n- Extracted VeNom hierarchy from Relationship sheet\n\n### Phase 2: Matching VeNom → Mondo (complete)\n- Full results in `data/venom_matching_results.tsv`\n- Matching approach: normalized names, British-to-American spelling, VeNom \"X - Y\" subtype reversal, parenthetical synonym swaps\n\n| Category | Count | Description |\n|---|---|---|\n| NHA exact match | 195 | VeNom term already exists in Mondo non-human animal branch |\n| Human analog found | 991 | No NHA term, but matching human/general disease exists |\n| No match | 4,085 | No name/synonym match in Mondo |\n\n- 174 unique Mondo NHA terms matched (some have multiple VeNom xrefs due to VeNom duplicates/variants)\n- 16 false positives identified and reclassified, including:\n  - Subtype concepts that over-matched to generic parents (e.g., \"Cachexia - cancer\" ≠ cancer)\n  - Clinical severity grades that are distinct from the base concept (PLE CCECAI scores)\n  - Concepts that matched via synonym but are different diseases (e.g., \"Cataract - Morgagnian\" ≠ CPAMD8-related cataract)\n  - Concepts where the VeNom term is a synonym but not an exact match (e.g., \"Spiking mortality syndrome\" ≠ poult enteritis mortality syndrome; \"Osteochondrosis (Juvenile osteochondritis, dyschondroplasia)\" has additional scope)\n\n### Phase 3: Three separate ROBOT templates\n\n#### Template 1: NHA exact matches — add xrefs and synonyms (complete)\n- File: `data/ROBOT_add_venom_xrefs_nha_matches.tsv`\n- 195 rows adding VeNom xrefs to 174 existing Mondo NHA terms\n- Also adds VeNom term name as exact synonym where it differs (37 rows)\n- Also adds abbreviation synonyms (26 rows)\n- Includes mondo_label and venom_label columns for manual review\n- Status: **ready for review**\n\n#### Template 2: Human analog matches — new NHA terms via cross-species analog pattern\n- 991 VeNom terms where a human/general disease exists in Mondo\n- New terms follow `nonhuman_disease.yaml` pattern: \"{human disease}, non-human animal\"\n- Definition: \"{human disease} that occurs in non-human animals\"\n- Each gets: VeNom xref, cross-species analog relationship, VeNom name as synonym\n- Status: **not started**\n\n#### Template 3: New terms with no match\n- 4,076 VeNom terms with no Mondo match\n- Classify under existing NHA parents where possible using VeNom hierarchy\n- Build hierarchy among new terms (e.g., \"cystitis, non-human animal\" parent of \"bacterial cystitis, non-human animal\")\n- Apply taxon restrictions for species-specific terms (6 with explicit species qualifiers like \"(canine)\")\n- Add `excluded_from_qc_check` for single-child terms\n- Status: **not started**\n\n### Phase 4: QC and normalization\n- Run `robot convert` syntax validation\n- Run `sh run.sh make NORM && mv NORM mondo-edit.obo`\n\n### Notes\n- Animal type flags (equine, farm, small animal, avian, exotics) are tracked in matching results for future subset annotations\n- VeNom has ~2,407 subtype terms (contain \" - \") — many are location-specific variants\n- ~4 administrative codes (\"DIAGNOSIS NOT MADE\", etc.) should be excluded from all templates",
+      "createdAt": "2026-03-27T13:06:36Z",
+      "includesCreatedEdit": false,
+      "isMinimized": false,
+      "minimizedReason": "",
+      "reactionGroups": [
+        {
+          "content": "ROCKET",
+          "users": {
+            "totalCount": 1
+          }
+        }
+      ],
+      "url": "https://github.com/monarch-initiative/mondo/issues/5726#issuecomment-4142457557",
+      "viewerDidAuthor": false
+    },
+    {
+      "id": "IC_kwDOBjach8773Fkg",
+      "author": {
+        "login": "katiermullen"
+      },
+      "authorAssociation": "MEMBER",
+      "body": "Updated NHA exact matches to 231. \n\nPlan to proceed with venom alignment and address exact synonyms later because this requires a plan to: \n\n- name each exact synonym with a non-human animal specific name, or\n- allow the same exact synonyms to be present in the human and NHA branches (e.g., hemophilia B, non human animal\" and \"hemophilia B\" would have the same exact synonym factor IX deficiency. \n- Consider human and non-human subsets to accomplish this and allowing the same exact synonyms across the two subsets but not within each subset or a source annotation on NHA exact synonyms that would be MONDO:NonHumanAnimalDisease, or the like.",
+      "createdAt": "2026-04-10T17:23:02Z",
+      "includesCreatedEdit": false,
+      "isMinimized": false,
+      "minimizedReason": "",
+      "reactionGroups": [],
+      "url": "https://github.com/monarch-initiative/mondo/issues/5726#issuecomment-4225521952",
+      "viewerDidAuthor": false
+    },
+    {
+      "id": "IC_kwDOBjach8773T9d",
+      "author": {
+        "login": "katiermullen"
+      },
+      "authorAssociation": "MEMBER",
+      "body": "Updated implementation plan up to template 1:\n\n## Implementation Plan\n\n### Data source\n- VeNom release h (Feb 2026), TermSubset sheet, Diagnosis subset\n- 6,372 Diagnosis terms total; 1,101 are inactive (Active=0), leaving 5,271 active diagnosis terms\n- Inactive terms are deprecated VeNom codes superseded by newer active codes (e.g., VeNom:79859 → VeNom:81176 for \"Melanoma - guttural pouch\")\n- All 5,271 active terms have unique term names (no duplicate labels among active terms)\n- VeNom uses British English spelling; matching applies British-to-American conversion\n- VeNom uses prefix `VeNom` (consistent with VBO), xref source is `MONDO:equivalentTo`\n- Animal type subsets from the Terms sheet (Large animal, Small animal, Farm, Exotics, Equine, Avian) are added as `in_subset` annotations with the VeNom ID as source\n- Subset definitions required in mondo-edit.obo header: `venom_large_animal`, `venom_small_animal`, `venom_farm_animal`, `venom_exotics`, `venom_equine`, `venom_avian`\n- GitHub issue: https://github.com/monarch-initiative/mondo/issues/5726\n\n### Phase 1: Data extraction (complete)\n- Extracted VeNom Diagnosis terms to `data/venom_diagnosis_terms.tsv`\n- Parsed parenthetical content into abbreviations, species qualifiers, and synonyms\n- Extracted VeNom hierarchy from Relationship sheet\n\n### Phase 2: Matching VeNom → Mondo (complete)\n- Full results in `data/venom_matching_results.tsv`\n- Matching approach: normalized names, British-to-American spelling, VeNom \"X - Y\" subtype reversal, parenthetical synonym swaps\n\n| Category | Count | Description |\n|---|---|---|\n| NHA exact match | 195 | VeNom term already exists in Mondo non-human animal branch |\n| Human analog found | 991 | No NHA term, but matching human/general disease exists |\n| No match | 4,085 | No name/synonym match in Mondo |\n\n- 174 unique Mondo NHA terms matched (some have multiple VeNom xrefs due to VeNom duplicates/variants)\n- 16 false positives identified and reclassified, including:\n  - Subtype concepts that over-matched to generic parents (e.g., \"Cachexia - cancer\" ≠ cancer)\n  - Clinical severity grades that are distinct from the base concept (PLE CCECAI scores)\n  - Concepts that matched via synonym but are different diseases (e.g., \"Cataract - Morgagnian\" ≠ CPAMD8-related cataract)\n  - Concepts where the VeNom term is a synonym but not an exact match (e.g., \"Spiking mortality syndrome\" ≠ poult enteritis mortality syndrome; \"Osteochondrosis (Juvenile osteochondritis, dyschondroplasia)\" has additional scope)\n\n### Phase 3: Three separate ROBOT templates\n\n#### Template 1: NHA exact matches — add xrefs (v2 → v3)\n- Original file: `data/ROBOT_add_venom_xrefs_nha_matches.tsv` (195 rows)\n- Current file: `data/ROBOT_add_venom_xrefs_nha_matches_v2.tsv` (**229 data rows**)\n- Curated source of truth: `data/curated_ROBOT_add_venom_xrefs_nha_matches_v2.tsv`\n- Adds VeNom xrefs to existing Mondo NHA terms\n- Includes mondo_label and venom_label columns for manual review\n- xref source: `MONDO:equivalentTo`\n- Includes `in_subset` annotations (6 animal type subsets from Terms sheet) with VeNom ID as source\n- Includes `term_tracker_item` linking to GH issue #5726\n- Lab diagnostic subset excluded (not relevant for diagnosis codes)\n- Synonym columns removed (venom_synonym, synonym_xref, abbreviation, abbreviation_type, abbreviation_xref) — synonyms will be handled separately\n- 18 columns: mondo_id, mondo_label, venom_label, venom_xref, xref_source, 6 subset/source pairs, term_tracker_item\n- v2 changes (+63 rows over original 195):\n  - 40 rows moved from Template 2 — these VeNom terms map to human analogs that already have NHA cross-species analogs in Mondo (e.g., VeNom \"Seizure disorder\" → existing \"epilepsy, non-human animal\", VeNom \"Congenital metabolic disorder\" → existing \"inborn errors of metabolism, non-human animal\")\n  - 12 rows moved from the 404 no-match file — same issue (e.g., VeNom \"Eczema\" → existing \"atopic dermatitis, non-human animal\", VeNom \"Phaeochromocytoma\" → existing \"pheochromocytoma, non-human animal\")\n  - 11 rows moved from Template 3 candidates — \"unspecified\" qualifier terms whose human analog already has an NHA cross-species analog (e.g., VeNom \"Sarcoma (site unspecified)\" → existing \"sarcoma, non-human animal\", VeNom \"Angiosarcoma (site unspecified)\" → existing \"canine hemangiosarcoma\")\n- v3 changes (manual review cleanup, 231 rows):\n  - **8 rows removed** — incorrect matches where the VeNom term was too broad, too specific, or a different concept from the matched NHA term (e.g., \"Buphthalmos\" ≠ glaucoma, \"Post-anaesthetic neuropathy\" ≠ peripheral neuropathy, \"Hydromyelia\" ≠ syringomyelia, \"Stomatitis\" ≠ vesicular stomatitis, \"Seizure disorder\" ≠ epilepsy, \"Nephrosis\" ≠ nephrotic syndrome, \"Spinal stenosis - cervical\" ≠ spinal stenosis, \"Ataxia (type unspecified)\" ≠ cerebellar ataxia)\n  - **21 rows added** — new matches identified during curation (e.g., VeNom \"Hepatitis - viral\" → hepatitis viral animal, VeNom \"Reovirus infection\" → Reoviridae infectious disease NHA, VeNom \"Factor VIII deficiency\" → hemophilia A NHA, VeNom \"Intervertebral disc degeneration\" → intervertebral disc disease NHA)\n  - **Synonym columns removed** — synonyms to be dealt with in a later step",
+      "createdAt": "2026-04-10T17:33:35Z",
+      "includesCreatedEdit": true,
+      "isMinimized": false,
+      "minimizedReason": "",
+      "reactionGroups": [],
+      "url": "https://github.com/monarch-initiative/mondo/issues/5726#issuecomment-4225580893",
+      "viewerDidAuthor": false
+    },
+    {
+      "id": "IC_kwDOBjach879HQJU",
+      "author": {
+        "login": "katiermullen"
+      },
+      "authorAssociation": "MEMBER",
+      "body": "#### Template 2: Human analog matches — new NHA terms via cross-species analog pattern (v2 → curated v2)\n- Original file: `data/ROBOT_add_venom_xrefs_human_analogs.tsv` (587 rows)\n- Intermediate file: `data/ROBOT_add_venom_xrefs_human_analogs_v2.tsv` (811 data rows)\n- Curated source of truth: `data/curated_ROBOT_add_venom_xrefs_human_analogs_v2.tsv` (**728 data rows**)\n- Creates new NHA terms with cross-species analog matches\n- New terms follow `nonhuman_disease.yaml` pattern: \"{human disease}, non-human animal\"\n- Definition: \"{human disease} that occurs in non-human animals.\" with xref `MONDO:patterns/nonhuman_disease`\n- Logical definition: `EquivalentTo MONDO:0005583 and (MONDO:0700097 some {human analog})`\n- Each gets: VeNom xref (`MONDO:equivalentTo`), VeNom name as synonym where it differs, abbreviation synonyms\n- Includes `in_subset` annotations (6 animal type subsets) and `term_tracker_item`\n- New MONDO IDs: MONDO:1013000 – MONDO:1013793\n- v2 changes:\n  - 40 rows removed (moved to Template 1 — NHA terms already existed)\n  - 166 rows added from the 404 no-match file — valid single-word exact matches that were incorrectly excluded by the original matching (e.g., \"Acne\" → acne, \"Botulism\" → botulism, \"Rabies\" → rabies, \"Tetanus\" → tetanus)\n  - 67 rows added from Template 3 candidates — \"unspecified\" qualifier terms that map directly to the base disease human analog (e.g., \"Gastritis (unspecified)\" → gastritis, \"Cholesteatoma (site unspecified)\" → cholesteatoma). These are not subtypes — the \"(unspecified)\" qualifier means the VeNom term IS the base disease.\n  - 9 human analog corrections (e.g., \"familial hyperlipidemia\" → \"hyperlipidemia\", \"adult teratoma\" → \"teratoma\", \"skin neoplasm\" → \"abscess\" for Abscess-skin)\n  - 1 additional correction: \"Nephroblastoma (site unspecified)\" now maps to MONDO:0006058 \"Wilms tumor\" (generic) instead of MONDO:0008679 \"Wilms tumor 1\" (specific)\n- v3 changes (from Template 1 review):\n  - **16 rows added** (14 VeNom terms → 12 new NHA terms, MONDO:1013780–MONDO:1013793) — generic VeNom terms that were incorrectly matched to species-specific NHA terms in Template 1:\n    - VeNom:1840 \"Sarcoma - soft tissue\" → soft tissue sarcoma, NHA (MONDO:0018078)\n    - VeNom:1841 \"Sarcoma - synovial\" → synovial sarcoma, NHA (MONDO:0010434)\n    - VeNom:16476 \"SCC - oral\" → oral cavity squamous cell carcinoma, NHA (MONDO:0004958)\n    - VeNom:16507 + VeNom:966 → hepatocellular carcinoma, NHA (MONDO:0007256) — 2 xrefs\n    - VeNom:16639 \"Carcinoma - mammary\" → breast carcinoma, NHA (MONDO:0004989)\n    - VeNom:16420 + VeNom:17039 → fibrosarcoma, NHA (MONDO:0005164) — 2 xrefs\n    - VeNom:17081 \"Granular cell myoblastoma\" → granular cell tumor, NHA (MONDO:0006235)\n    - VeNom:17344 \"Transitional cell carcinoma\" → transitional cell carcinoma, NHA (MONDO:0006474)\n    - VeNom:1918 \"Stomatitis\" → stomatitis, NHA (MONDO:0004842)\n    - VeNom:80834 \"Brucellosis\" → brucellosis, NHA (MONDO:0005683)\n    - VeNom:81073 \"Hypotrichosis\" → hypotrichosis, NHA (MONDO:0003037)\n    - VeNom:20077 \"Rhabdomyosarcoma\" → rhabdomyosarcoma, NHA (MONDO:0005212)\n    - VeNom:20174 \"Angiosarcoma\" → angiosarcoma, NHA (MONDO:0016982)\n    - VeNom:81024 \"Glioma\" → glioma, NHA (MONDO:0021042)\n  - **Synonym capitalization normalized** (same rules as Template 1)\n  - **Synonym logic**: VeNom label added as exact synonym only when it differs from the human analog label (not the NHA label); e.g., \"Stomatitis\" → stomatitis NHA gets no synonym, but \"Carcinoma - hepatocellular\" → hepatocellular carcinoma NHA gets a synonym\n- Curation changes (manual review of curated v2):\n  - **8 \"Change match\" corrections applied** — human analog IDs updated to more appropriate matches (e.g., MONDO:1013111 → MONDO:0021227 \"adrenal gland neoplasm\", MONDO:1013142 → MONDO:0017611 \"pituitary gland neoplasm\", MONDO:1013239 → MONDO:0024574 \"von Willebrand disease\")\n  - **8 duplicate xref consolidations applied** — multiple VeNom terms mapping to the same human analog combined into single rows with `|`-separated xrefs (e.g., VeNom:535|VeNom:21882 → MONDO:0005098, VeNom:16760|VeNom:21950 → MONDO:0006373)\n  - **3 infectious agents added** — NCBITaxon IDs added for VeNom:80595 (Echinococcus granulosus), VeNom:1787 (Rabies), VeNom:20522 (Glanders)\n  - **2 rows moved to Template 1** (NHA terms already existed in Mondo):\n    - VeNom:81076 \"Immunodeficiency disorder\" → existing MONDO:1011724 \"immunodeficiency disease, non-human animal\"\n    - VeNom:2090 \"Von Willebrand disorder\" → existing MONDO:1011411 \"Von Willebrand disease, non-human animal\"\n  - **1 row kept as new NHA term** (distinct from existing NHA):\n    - VeNom:81073 \"Hypotrichosis\" → new MONDO:1013776 \"hypotrichosis, non-human animal\" (MONDO:0003037) — distinct from existing MONDO:1012977 \"congenital hypotrichosis, non-human animal\"\n  - **2 orphaned VeNom IDs moved to Template 3**: VeNom:1774 \"Pulmonary oedema - non-cardiogenic\", VeNom:1093 \"Intoxication (poisoning) - insecticide\"\n  - **VeNom:1093 synonym_xref corrected** in MONDO:1013082 row (was referencing VeNom:1093 instead of VeNom:80363)\n  - **IBD children** (VeNom:19750, VeNom:19751, VeNom:19752) deferred to Template 3 as child terms of MONDO:1013080\n- Remaining review flags (48 rows): all `MATCH_CHANGED` and `DUPLICATE_HUMAN_ID` flags have been reviewed; comments recording decisions are retained for provenance\n- Status: **reviewed**\n\n##### Matching bugs fixed in v2\n\nThe original Phase 2 matching had two systematic errors:\n\n1. **Single-word rejection too aggressive.** To prevent false positives (e.g., \"lung\" → lung neoplasm, \"iris\" → IRIS syndrome), the matcher rejected ALL single-word matches. This incorrectly excluded ~166 valid disease matches like \"Botulism\" → botulism, \"Rabies\" → rabies. Fixed: these are now included in Template 2 v2.\n\n2. **No cross-reference check against existing NHA terms.** The matcher looked up human analogs but never checked whether the NHA cross-species analog already existed in Mondo. This caused ~40 rows to propose creating new NHA terms that already existed (e.g., \"epilepsy, non-human animal\", \"pyloric stenosis, non-human animal\", \"hypertrophic cardiomyopathy, non-human animal\"). Fixed: a cross-reference lookup using the 1,404 existing human→NHA mappings (via `intersection_of: MONDO:0700097`) plus name-based matching now catches these. Affected rows moved to Template 1 v2.\n\nSee human reviewed ROBOT template here: https://docs.google.com/spreadsheets/d/1ysUgwSd-D4O7S7EWoT2rvYWqYc0OmTI1u0SYm2uFOPw/edit?gid=1385366246#gid=1385366246",
+      "createdAt": "2026-04-14T19:20:36Z",
+      "includesCreatedEdit": false,
+      "isMinimized": false,
+      "minimizedReason": "",
+      "reactionGroups": [],
+      "url": "https://github.com/monarch-initiative/mondo/issues/5726#issuecomment-4246536788",
+      "viewerDidAuthor": false
+    }
+  ],
+  "title": "Add non-human animal diseases from VeNom",
+  "url": "https://github.com/monarch-initiative/mondo/issues/5726"
+}
