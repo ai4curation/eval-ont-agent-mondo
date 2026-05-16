@@ -539,15 +539,36 @@ jobs:
                 nvm install 22
                 nvm use 22
               fi
+              echo "node: $(command -v node) $(node -v 2>/dev/null)"
               nohup npx -y openai-oauth \
                 --oauth-file "$HOME/.codex/auth.json" \
                 --host 127.0.0.1 --port 10531 \
                 > /tmp/oauth-proxy.log 2>&1 &
-              # wait for the proxy to be ready
-              for i in $(seq 1 40); do
-                curl -sf http://127.0.0.1:10531/v1/models >/dev/null 2>&1 && break
-                sleep 2
+              PROXY_PID=$!
+              # wait up to ~4 min for the proxy (npx may download the pkg first)
+              PROXY_UP=0
+              for i in $(seq 1 80); do
+                if curl -sf http://127.0.0.1:10531/v1/models >/dev/null 2>&1; then
+                  PROXY_UP=1; break
+                fi
+                kill -0 "$PROXY_PID" 2>/dev/null || { echo "proxy process died"; break; }
+                sleep 3
               done
+              echo "===== /tmp/oauth-proxy.log ====="
+              cat /tmp/oauth-proxy.log 2>/dev/null || true
+              echo "===== /v1/models ====="
+              curl -s -m 15 http://127.0.0.1:10531/v1/models || true
+              echo
+              if [ "$PROXY_UP" != "1" ]; then
+                echo "ERROR: Codex-OAuth proxy did not become ready" >&2
+                exit 1
+              fi
+              echo "===== proxy smoke test (chat/completions) ====="
+              curl -s -m 60 http://127.0.0.1:10531/v1/chat/completions \
+                -H 'Content-Type: application/json' \
+                -d '{"model":"gpt-5.5","messages":[{"role":"user","content":"say hi"}],"max_tokens":5}' \
+                | head -c 800 || true
+              echo
               # global config (not repo-local, so it never pollutes the diff)
               mkdir -p "$HOME/.config/opencode"
               cat > "$HOME/.config/opencode/opencode.json" <<'OCJSON'
@@ -576,10 +597,16 @@ jobs:
               ;;
           esac
 
-          opencode run "$(cat __agent_prompt__.md)" \
+          timeout 1500 opencode run "$(cat __agent_prompt__.md)" \
             --model "$OC_MODEL" \
             --format json \
             2>&1 | tee /tmp/opencode-trace.json
+          OC_RC=${PIPESTATUS:-$?}
+          if [ -f /tmp/oauth-proxy.log ]; then
+            echo "===== /tmp/oauth-proxy.log (final) ====="
+            tail -c 4000 /tmp/oauth-proxy.log || true
+          fi
+          exit "$OC_RC"
 
       - name: Install Pi
         if: inputs.agent_runtime == 'pi'
