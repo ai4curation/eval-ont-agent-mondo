@@ -1,0 +1,22 @@
+{
+  "body": "**Mondo term (ID and Label):**\nMONDO:0009106 diastematomyelia\n\n**Xref that should be fixed (ID and label):**\n[Orphanet:1671](http://www.orpha.net/ORDO/Orphanet_1671)  Split cord malformation type I\nThis is too narrow for this concept. Would recommend instead using Split cord malformation ORPHA:573278 .  Per SNOMED CT 445308004, split cord malformation and diastematomyelia are synonyms.\n\nSCM type 1 and 2 are narrower subtypes that may or may not be in scope for Mondo. \n\n**Your nano-attribution (ORCID)**\nIf you don't have an ORCID, you can sign up for one [here](https://orcid.org/)\n\n\n**Other comments:**\n",
+  "comments": [
+    {
+      "id": "IC_kwDOBjach88AAAABAmuQKA",
+      "author": {
+        "login": "MeeSiing"
+      },
+      "authorAssociation": "MEMBER",
+      "body": "Hi @kanems, thank you for pointing this out. The update will be available in the upcoming release. Thanks.",
+      "createdAt": "2026-04-28T13:15:13Z",
+      "includesCreatedEdit": false,
+      "isMinimized": false,
+      "minimizedReason": "",
+      "reactionGroups": [],
+      "url": "https://github.com/monarch-initiative/mondo/issues/9871#issuecomment-4335570984",
+      "viewerDidAuthor": false
+    }
+  ],
+  "title": "MONDO:0009106  diastematomyelia",
+  "url": "https://github.com/monarch-initiative/mondo/issues/9871"
+}
