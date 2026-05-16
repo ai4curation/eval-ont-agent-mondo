@@ -1,0 +1,23 @@
+{
+  "run_id": 25966950807,
+  "repo": "ai4curation/eval-ont-agent-mondo",
+  "workflow": "Evaluate an agent on an issue",
+  "inputs": {
+    "issue_repo": "monarch-initiative/mondo",
+    "issue_number": "9862",
+    "pr_number": "10103",
+    "model": "openai/gpt-5.4",
+    "agent_config_repo": "ai4curation/mondo-agent-config",
+    "agent_config_tag": "v3",
+    "agent_config_directory": ".",
+    "iter_num": "1",
+    "repo_url_prefix": "https://href.li/?",
+    "create_pr": "true",
+    "force_new_branch": "true"
+  },
+  "branch": "scribe-v1-ai4curation-mondo-agent-config-v3-.-openai-gpt-5.4-iter1-issue-9862",
+  "created_pr_number": "675",
+  "created_pr_url": "https://github.com/ai4curation/eval-ont-agent-mondo/pull/675",
+  "original_issue_url": "https://github.com/monarch-initiative/mondo/issues/9862",
+  "original_pr_url": "https://github.com/monarch-initiative/mondo/pull/10103"
+}
