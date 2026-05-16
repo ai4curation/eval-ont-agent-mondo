@@ -1,0 +1,4 @@
+Performing one time database migration, may take a few minutes...
+sqlite-migration:done
+Database migration complete.
+{"type":"error","timestamp":1778949111355,"sessionID":"ses_1ce5ec2eeffeUle4Xz7gJeCIUh","error":{"name":"UnknownError","data":{"message":"Unexpected server error. Check server logs for details."}}}
