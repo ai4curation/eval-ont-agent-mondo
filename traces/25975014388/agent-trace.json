@@ -1,0 +1,25 @@
+Reading additional input from stdin...
+2026-05-16T22:50:23.539424Z ERROR codex_core::session: failed to load skill /__w/eval-ont-agent-mondo/eval-ont-agent-mondo/.agents/skills/identifier-validator/SKILL.md: invalid YAML: mapping values are not allowed in this context at line 2 column 467
+2026-05-16T22:50:23.539444Z ERROR codex_core::session: failed to load skill /__w/eval-ont-agent-mondo/eval-ont-agent-mondo/.agents/skills/ontology-reasoner/SKILL.md: invalid YAML: mapping values are not allowed in this context at line 2 column 210
+2026-05-16T22:50:23.539452Z ERROR codex_core::session: failed to load skill /__w/eval-ont-agent-mondo/eval-ont-agent-mondo/.agents/skills/deep-research-specialist/SKILL.md: invalid YAML: mapping values are not allowed in this context at line 2 column 392
+2026-05-16T22:50:23.539456Z ERROR codex_core::session: failed to load skill /__w/eval-ont-agent-mondo/eval-ont-agent-mondo/.agents/skills/task-coordinator/SKILL.md: invalid YAML: mapping values are not allowed in this context at line 2 column 222
+2026-05-16T22:50:23.539460Z ERROR codex_core::session: failed to load skill /__w/eval-ont-agent-mondo/eval-ont-agent-mondo/.agents/skills/metadata-checker/SKILL.md: invalid YAML: mapping values are not allowed in this context at line 2 column 289
+2026-05-16T22:50:23.539463Z ERROR codex_core::session: failed to load skill /__w/eval-ont-agent-mondo/eval-ont-agent-mondo/.agents/skills/design-pattern-advisor/SKILL.md: invalid YAML: mapping values are not allowed in this context at line 2 column 277
+2026-05-16T22:50:23.633391Z ERROR codex_models_manager::manager: failed to refresh available models: unexpected status 401 Unauthorized: Your authentication token has been invalidated. Please try signing in again., url: https://chatgpt.com/backend-api/codex/models?client_version=0.130.0, cf-ray: 9fcdf0e95c263050-LAX, request id: 5ce88a5f-8b1b-4def-9d68-2baca4c77280, auth error: 401, auth error code: token_invalidated
+{"type":"thread.started","thread_id":"019e32fb-ce12-75a0-b056-d24fbb4b840f"}
+{"type":"turn.started"}
+2026-05-16T22:50:23.740457Z ERROR rmcp::transport::worker: worker quit with fatal: Transport channel closed, when UnexpectedContentType(Some("text/plain; body: {\n  \"error\": {\n    \"message\": \"Your authentication token has been invalidated. Please try signing in again.\",\n    \"type\": \"invalid_request_error\",\n    \"code\": \"token_invalidated\",\n    \"param\": null\n  },\n  \"status\": 401\n}"))
+2026-05-16T22:50:23.939886Z ERROR codex_api::endpoint::responses_websocket: failed to connect to websocket: HTTP error: 401 Unauthorized, url: wss://chatgpt.com/backend-api/codex/responses
+2026-05-16T22:50:24.070047Z ERROR codex_api::endpoint::responses_websocket: failed to connect to websocket: HTTP error: 401 Unauthorized, url: wss://chatgpt.com/backend-api/codex/responses
+2026-05-16T22:50:24.202471Z ERROR codex_login::auth::manager: Failed to refresh token: 401 Unauthorized: {
+  "error": {
+    "message": "Your refresh token has already been used to generate a new access token. Please try signing in again.",
+    "type": "invalid_request_error",
+    "param": null,
+    "code": "refresh_token_reused"
+  }
+}
+2026-05-16T22:50:24.431334Z ERROR codex_api::endpoint::responses_websocket: failed to connect to websocket: HTTP error: 401 Unauthorized, url: wss://chatgpt.com/backend-api/codex/responses
+2026-05-16T22:50:24.544702Z ERROR codex_api::endpoint::responses_websocket: failed to connect to websocket: HTTP error: 401 Unauthorized, url: wss://chatgpt.com/backend-api/codex/responses
+{"type":"error","message":"Your access token could not be refreshed because your refresh token was already used. Please log out and sign in again."}
+{"type":"turn.failed","error":{"message":"Your access token could not be refreshed because your refresh token was already used. Please log out and sign in again."}}
