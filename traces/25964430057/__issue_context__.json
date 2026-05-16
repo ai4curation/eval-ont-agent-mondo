@@ -1,0 +1,22 @@
+{
+  "body": "Macrothrombocytopenia and granulocyte inclusions with or without nephritis or sensorineural hearing loss exact synonym should only be: MATINS, MYH9-Related Disease, MYH9-related syndromic thrombocytopenia,  MYH9-RD, MYH9-related disorder and \nMYH9-related syndrome.  The conditions listed in NORD as synonyms were considered distinct entities in the past  but currently are known to represent the different clinical presentations of MYH9-RD as you comment in the definition of this condition.  I suggest to add the synonym MYH9-Related Disease as the exact synonym and remove the other terms (is there was a way to include \"subtypes\" or \"forms\" or \"phenotypes\"  then we could include these conditions here (this is also the case for other gene-related conditions where there are the same issues.\nThank you, Gioconda Alyea",
+  "comments": [
+    {
+      "id": "IC_kwDOBjach88AAAABAwqHUg",
+      "author": {
+        "login": "MeeSiing"
+      },
+      "authorAssociation": "MEMBER",
+      "body": "Hi @galyea123, thanks for the ticket. \n\nWe've made sure that all your preferred synonyms are included. We will keep the other synonyms since OMIM still lists them and the provenance supports their inclusion. \n\nMy understanding is that subtypes or forms can usually be included as child terms but phenotypes are not within scope of Mondo. @sabrinatoro please confirm this.  \n",
+      "createdAt": "2026-04-29T17:23:56Z",
+      "includesCreatedEdit": false,
+      "isMinimized": false,
+      "minimizedReason": "",
+      "reactionGroups": [],
+      "url": "https://github.com/monarch-initiative/mondo/issues/9909#issuecomment-4345988946",
+      "viewerDidAuthor": false
+    }
+  ],
+  "title": "macrothrombocytopenia and granulocyte inclusions with or without nephritis or sensorineural hearing loss nomenclature and synonyms",
+  "url": "https://github.com/monarch-initiative/mondo/issues/9909"
+}
