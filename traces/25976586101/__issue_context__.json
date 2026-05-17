@@ -1,0 +1,111 @@
+{
+  "body": "### Label\n\npreneoplastic lesion\n\n### Synonyms\n\n_No response_\n\n### Synonym type\n\nNone\n\n### Definition\n\nA clonal proliferation of cells that have accumulated some, but not all, molecular alterations necessary for malignant transformation, representing an intermediate stage in carcinogenesis with increased risk of progression to invasive neoplasia. \n\nReferences: \n[40684183](https://pubmed.ncbi.nlm.nih.gov/40684183/)\n[37775701](https://pubmed.ncbi.nlm.nih.gov/37775701/)\n[40624726](https://pubmed.ncbi.nlm.nih.gov/40624726/)\n[39754221](https://pubmed.ncbi.nlm.nih.gov/39754221/)\n\n### Parent term\n\nMONDO:0700096 human disease\n\n### Children term(s)\n\n_No response_\n\n### ORCID Identifier\n\nhttps://orcid.org/0000-0002-2336-2552\n\n### Website URL\n\n_No response_\n\n### Additional comments\n\n_No response_",
+  "comments": [
+    {
+      "id": "IC_kwDOBjach87xZRb1",
+      "author": {
+        "login": "MeeSiing"
+      },
+      "authorAssociation": "MEMBER",
+      "body": "@corismall Thank you for this request.\n\nCurrently, we have these two terms in Mondo and it looks like the request term can be added as exact synonym to one of them.\n1. [MONDO:0021074 precancerous condition](https://www.ebi.ac.uk/ols4/ontologies/mondo/classes/http%253A%252F%252Fpurl.obolibrary.org%252Fobo%252FMONDO_0021074) \n2. [ MONDO:0000611 pre-malignant neoplasm](https://www.ebi.ac.uk/ols4/ontologies/mondo/classes/http%253A%252F%252Fpurl.obolibrary.org%252Fobo%252FMONDO_0000611)\n\nIf you do not agree with adding it as synonym, can you please let me know how the new term is different from these terms? \n\nThank you. \n",
+      "createdAt": "2026-03-12T20:46:19Z",
+      "includesCreatedEdit": true,
+      "isMinimized": false,
+      "minimizedReason": "",
+      "reactionGroups": [],
+      "url": "https://github.com/monarch-initiative/mondo/issues/9781#issuecomment-4049934069",
+      "viewerDidAuthor": false
+    },
+    {
+      "id": "IC_kwDOBjach872MDDj",
+      "author": {
+        "login": "corismall"
+      },
+      "authorAssociation": "NONE",
+      "body": "Hi @MeeSiing, thanks for suggesting other terms, we've decided to go with 'precancerous condition'.  I agree, the requested new term can be added as a synonym. ",
+      "createdAt": "2026-03-25T22:55:04Z",
+      "includesCreatedEdit": false,
+      "isMinimized": false,
+      "minimizedReason": "",
+      "reactionGroups": [
+        {
+          "content": "THUMBS_UP",
+          "users": {
+            "totalCount": 1
+          }
+        }
+      ],
+      "url": "https://github.com/monarch-initiative/mondo/issues/9781#issuecomment-4130353379",
+      "viewerDidAuthor": false
+    },
+    {
+      "id": "IC_kwDOBjach872i2gs",
+      "author": {
+        "login": "corismall"
+      },
+      "authorAssociation": "NONE",
+      "body": "Hi @MeeSiing, sorry I was a bit preemptive with this decision, we actually would not prefer \"preneoplastic lesion\" to be added as an exact synonym. Sorry about that. This would mean that \"clonal hematopoiesis of indeterminate potential\" is a preneoplastic lesion which is not accurate.  ",
+      "createdAt": "2026-03-26T16:17:09Z",
+      "includesCreatedEdit": false,
+      "isMinimized": false,
+      "minimizedReason": "",
+      "reactionGroups": [],
+      "url": "https://github.com/monarch-initiative/mondo/issues/9781#issuecomment-4136331308",
+      "viewerDidAuthor": false
+    },
+    {
+      "id": "IC_kwDOBjach872mLCa",
+      "author": {
+        "login": "MeeSiing"
+      },
+      "authorAssociation": "MEMBER",
+      "body": "Hi @corismall, I have gathered more info and considering to create preneoplastic lesion as a new term. \nI need to know if this updated definition represents the concept you want.\nPreneoplastic lesion def = A precancerous condition characterized by accumulation of some molecular alterations necessary for malignant transformation in a clonal proliferation of cells, representing an intermediate stage in carcinogenesis with increased risk of progression to invasive neoplasia. \nDo you think preneoplastic lesion is a subtype of pre-maglinat neoplasm (def =A disease of cellular proliferation that results in abnormal growths in the body, which do not invade or destroy the surrounding tissue but, given enough time, will transform into a cancer)?\nIf yes, I can create preneoplastic lesion as a child term under pre-maglinat neoplasm.  ",
+      "createdAt": "2026-03-26T18:17:30Z",
+      "includesCreatedEdit": false,
+      "isMinimized": false,
+      "minimizedReason": "",
+      "reactionGroups": [],
+      "url": "https://github.com/monarch-initiative/mondo/issues/9781#issuecomment-4137201818",
+      "viewerDidAuthor": false
+    },
+    {
+      "id": "IC_kwDOBjach874lO7d",
+      "author": {
+        "login": "MeeSiing"
+      },
+      "authorAssociation": "MEMBER",
+      "body": "@corismall, we will have a release next week. Do you still need this new term created or can I close this ticket? ",
+      "createdAt": "2026-04-01T14:30:13Z",
+      "includesCreatedEdit": false,
+      "isMinimized": false,
+      "minimizedReason": "",
+      "reactionGroups": [],
+      "url": "https://github.com/monarch-initiative/mondo/issues/9781#issuecomment-4170510045",
+      "viewerDidAuthor": false
+    },
+    {
+      "id": "IC_kwDOBjach874qpLP",
+      "author": {
+        "login": "corismall"
+      },
+      "authorAssociation": "NONE",
+      "body": "Hi @MeeSiing, we still need the new term, can you please make this a child term under \"precancerous condition\" rather than pre-malignant neoplasm? Pre-neoplastic lesion is not a type of neoplasm but rather before any neoplasm forms therefore pre-malignant neoplasm parent term would not work. Thank you!!",
+      "createdAt": "2026-04-01T17:53:36Z",
+      "includesCreatedEdit": true,
+      "isMinimized": false,
+      "minimizedReason": "",
+      "reactionGroups": [
+        {
+          "content": "THUMBS_UP",
+          "users": {
+            "totalCount": 1
+          }
+        }
+      ],
+      "url": "https://github.com/monarch-initiative/mondo/issues/9781#issuecomment-4171928271",
+      "viewerDidAuthor": false
+    }
+  ],
+  "title": "Request for new term [preneoplastic lesion]",
+  "url": "https://github.com/monarch-initiative/mondo/issues/9781"
+}
