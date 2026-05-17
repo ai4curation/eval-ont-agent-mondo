@@ -1,0 +1,67 @@
+{
+  "body": "Is this enough to make a disease association?\nI ask, because I noted it locally in 2024, but it hasn't yet got an association.\n\n  | Functional studies in yeast confirm the pathogenicity of a new GINS3 Meier-Gorlin syndrome variant.\n  | PMID: 38773883 ",
+  "comments": [
+    {
+      "id": "IC_kwDOBjach88AAAABAwxEpg",
+      "author": {
+        "login": "MeeSiing"
+      },
+      "authorAssociation": "MEMBER",
+      "body": "Hi @ValWood we have MONDO:0980992 'Meier-Gorlin syndrome 9' which is associated with GINS3 gene. We can add 'GINS3 Meier-Gorlin syndrome' as an exact synonym. Please let us know if you have any concerns. Thanks.",
+      "createdAt": "2026-04-29T17:41:22Z",
+      "includesCreatedEdit": false,
+      "isMinimized": false,
+      "minimizedReason": "",
+      "reactionGroups": [],
+      "url": "https://github.com/monarch-initiative/mondo/issues/9933#issuecomment-4346102950",
+      "viewerDidAuthor": false
+    },
+    {
+      "id": "IC_kwDOBjach88AAAABAw6E3w",
+      "author": {
+        "login": "ValWood"
+      },
+      "authorAssociation": "COLLABORATOR",
+      "body": "I don't see it here:\nhttps://monarchinitiative.org/HGNC:25851\n\nv",
+      "createdAt": "2026-04-29T18:02:20Z",
+      "includesCreatedEdit": false,
+      "isMinimized": false,
+      "minimizedReason": "",
+      "reactionGroups": [],
+      "url": "https://github.com/monarch-initiative/mondo/issues/9933#issuecomment-4346250463",
+      "viewerDidAuthor": false
+    },
+    {
+      "id": "IC_kwDOBjach88AAAABAxBePg",
+      "author": {
+        "login": "MeeSiing"
+      },
+      "authorAssociation": "MEMBER",
+      "body": "What I have said is based on OMIM reference in MONDO:0980992 'Meier-Gorlin syndrome 9', we have not included the gene association therefore you do not see it yet. ",
+      "createdAt": "2026-04-29T18:18:58Z",
+      "includesCreatedEdit": false,
+      "isMinimized": false,
+      "minimizedReason": "",
+      "reactionGroups": [],
+      "url": "https://github.com/monarch-initiative/mondo/issues/9933#issuecomment-4346371646",
+      "viewerDidAuthor": false
+    },
+    {
+      "id": "IC_kwDOBjach88AAAABAxHHwQ",
+      "author": {
+        "login": "ValWood"
+      },
+      "authorAssociation": "COLLABORATOR",
+      "body": "I dont understand?",
+      "createdAt": "2026-04-29T18:32:19Z",
+      "includesCreatedEdit": false,
+      "isMinimized": false,
+      "minimizedReason": "",
+      "reactionGroups": [],
+      "url": "https://github.com/monarch-initiative/mondo/issues/9933#issuecomment-4346464193",
+      "viewerDidAuthor": false
+    }
+  ],
+  "title": "GINS3 Meier-Gorlin syndrome",
+  "url": "https://github.com/monarch-initiative/mondo/issues/9933"
+}
