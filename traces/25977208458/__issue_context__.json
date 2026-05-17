@@ -1,0 +1,6 @@
+{
+  "body": "### Label\n\npodocytopathy\n\n### Synonyms\n\n_No response_\n\n### Synonym type\n\nNone\n\n### Definition\n\nA group of glomerular diseases caused by the structural or functional impairment of podocytes which drive proteinuria or nephrotic syndrome. PMID:32792490, PMID:25684864, PMID:38804512\n\n### Parent term\n\nMONDO:0019722 glomerular disorder\n\n### Children term(s)\n\nMONDO:0006835 lipoid nephrosis, MONDO:0100313 focal segmental glomerulosclerosis\n\n### ORCID Identifier\n\nhttps://orcid.org/0009-0009-0876-0331\n\n### Website URL\n\n_No response_\n\n### Additional comments\n\nAssign @sabrinatoro @cws99",
+  "comments": [],
+  "title": "Request for new term [podocytopathy]",
+  "url": "https://github.com/monarch-initiative/mondo/issues/10149"
+}
